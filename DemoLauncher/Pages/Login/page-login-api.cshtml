@@ -1,0 +1,434 @@
+﻿@page
+@model PageLoginApiModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <main>
+        <!-- Login -->
+        <section class="dzsparallaxer auto-init height-is-based-on-content use-loading mode-scroll loaded dzsprx-readyall" data-options="{direction: 'reverse', settings_mode_oneelement_max_offset: '150'}">
+            <!-- Parallax Image -->
+            <div class="divimage dzsparallaxer--target w-100 u-bg-overlay g-bg-size-cover g-bg-bluegray-opacity-0_3--after" style="height: 140%; background-image: url(../../assets/img-temp/1920x1080/img2.jpg);"></div>
+            <!-- End Parallax Image -->
+
+            <div class="container g-pt-100 g-pb-20">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 flex-md-unordered align-self-center g-mb-80 ">
+                        <div id="login-section-inner" class="g-bg-white rounded g-pa-50">
+                            <header class="text-center mb-4">
+                                <h2 class="h2 g-color-black g-font-weight-600">Login</h2>
+                            </header>
+
+                            <!-- Form -->
+                            <form id="submitForm" method="post"></form>
+
+                            <form class="g-py-15">
+                                <div class="mb-4" form="submitForm" style="@(Model.bShowUsername ? "display:block" : "display:none")">
+                                    <input asp-for="UserName" form="submitForm" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
+                                </div>
+                                <div class="form-group" form="submitForm" style="@(Model.bShowFactors ? "display:block" : "display:none")">
+                                    <label asp-for="SelectedFactor" class="control-label" form="submitForm">Factor</label>
+                                    <select asp-for="SelectedFactor" form="submitForm" class="form-control"
+                                            asp-items="@Model.FactorList">
+                                        <option value="default, default" selected>Select...</option>
+                                    </select>
+                                </div>
+
+                                <div class="g-mb-30" id="VerifyTextBox" style="@(Model.bShowVerify ? "display:block" : "display:none")">
+                                    <input asp-for="Verify" form="submitForm" autocomplete="new-password" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="Password" placeholder="Code">
+
+                                </div>
+
+                                <input type="hidden" name="selectedFactorId" id="selectedFactorId" value="">
+
+                                <div class="text-center mb-5">
+                                    <button id="SendCodeButton" style="display:none" OnClick="SendCode();return false" class="btn btn-block u-btn-bluegray rounded g-py-13">Send Code</button>
+                                </div>
+
+                                <div class="text-center mb-5">
+                                    <button asp-page-handler="Login" id="loginSubmitButton" form="submitForm" class="btn btn-block u-btn-primary rounded g-py-13">Sign In</button>
+                                </div>
+
+                                <div class="d-flex justify-content-center text-center g-mb-30">
+                                    <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
+                                    <span class="align-self-center g-color-gray-dark-v5 mx-4">OR</span>
+                                    <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
+                                </div>
+
+                                <div class="row no-gutters g-mb-40">
+                                    <div class="col-6">
+                                        <button class="btn btn-block u-btn-facebook rounded g-px-30 g-py-13 mr-1" type="button">Facebook</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-block u-btn-twitter rounded g-px-30 g-py-13 ml-1" type="button">Twitter</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+                            <footer class="text-center">
+                                <p class="g-color-gray-dark-v5 mb-0">
+                                    Don't have an account? <a class="g-font-weight-600" href="/Login/page-signup-api">signup</a>
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <!-- End Login -->
+        <!-- Footer -->
+        <div id="contacts-section" class="g-bg-black-opacity-0_9 g-color-white-opacity-0_8 g-py-60">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">About Us</h2>
+                        </div>
+
+                        <p>Okta is the leading independent provider of identity for the enterprise. The Okta Identity Cloud enables organizations to securely connect the right people to the right technologies at the right time. With over 6,000 pre-built integrations to applications and infrastructure providers, Okta customers can easily and securely use the best technologies for their business. Over 6,500 organizations, including 20th Century Fox, JetBlue, Nordstrom, Slack, Teach for America and Twilio, trust Okta to help protect the identities of their workforces and customers.</p>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Latest Posts</h2>
+                        </div>
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/better-together-using-the-okta-integration-with-hashicorp-terraform/">Better together: Using the Okta integration with HashiCorp Terraform</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 27, 2019</div>
+                        </article>
+
+                        <hr class="g-brd-white-opacity-0_1 g-my-10">
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/heres-how-you-solve-the-lifecycle-management-problem/">Here’s How You Solve the Lifecycle Management Problem</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 27, 2019</div>
+                        </article>
+
+                        <hr class="g-brd-white-opacity-0_1 g-my-10">
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/okta-vmware-evolve-integrations-to-offer-more-customer-value-0/">Okta + VMware Evolve Integrations to Offer More Customer Value</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 26, 2019</div>
+                        </article>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Useful Links</h2>
+                        </div>
+
+                        <nav class="text-uppercase1">
+                            <ul class="list-unstyled g-mt-minus-10 mb-0">
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/pricing/">Pricing</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/company/careers/">Careers</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/services/support/">Support</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/press-room/">Press Room</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://trust.okta.com/">Trust</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://status.okta.com/?_ga=2.225933018.1550227199.1566851798-1544007845.1560198683">Status</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/">Blog</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/contact/">Contact Us</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/resources/customer-experience-center">Customer Experience Center</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Our Contacts</h2>
+                        </div>
+
+                        <address class="g-bg-no-repeat g-font-size-12 mb-0" style="background-image: url(../../assets/img/maps/map2.png);">
+                            <!-- Location -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">100 1st St 6th floor<br>San Francisco, CA 94105</p>
+                            </div>
+                            <!-- End Location -->
+                            <!-- Phone -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">(888) 722-7871</p>
+                            </div>
+                            <!-- End Phone -->
+                            <!-- Email and Website -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-globe"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/contact-sales/">Contact Sales</a>
+                                    <br>
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com">https://www.okta.com</a>
+                                </p>
+                            </div>
+                            <!-- End Email and Website -->
+                        </address>
+                    </div>
+                    <!-- End Footer Content -->
+                </div>
+            </div>
+        </div>
+        <!-- End Footer -->
+        <!-- Copyright Footer -->
+        <footer class="g-bg-gray-dark-v1 g-color-white-opacity-0_8 g-py-20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 text-center text-md-left g-mb-10 g-mb-0--md">
+                        <div class="d-lg-flex">
+                            <small class="d-block g-font-size-default g-mr-10 g-mb-10 g-mb-0--md">&copy; 2019 Okta Inc. All Rights Reserved. Various trademarks held by their respective owners.</small>
+                            <ul class="u-list-inline">
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/privacy-policy/">Privacy Policy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/security/">Security</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/faq/">FAQ</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="http://developer.okta.com/">Developer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 align-self-center">
+                        <ul class="list-inline text-center text-md-right mb-0">
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Facebook">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Skype">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-skype"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Linkedin">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Pinterest">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Twitter">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Dribbble">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Copyright Footer -->
+        <a class="js-go-to u-go-to-v1" href="#" data-type="fixed" data-position='{
+     "bottom": 15,
+     "right": 15
+   }' data-offset-top="400" data-compensation="#js-header" data-show-effect="zoomIn">
+            <i class="hs-icon hs-icon-arrow-top"></i>
+        </a>
+    </main>
+
+    <div class="u-outer-spaces-helper"></div>
+
+
+    <!-- JS Plugins Init. -->
+    <script>$(document).on('ready', function () {
+            // initialization of tabs
+            $.HSCore.components.HSTabs.init('[role="tablist"]');
+
+            // initialization of go to
+            $.HSCore.components.HSGoTo.init('.js-go-to');
+
+            $('#SelectedFactor').change(function () {
+                //TODO: when "select" is set by defualt, submit button is enabled and will trigger an error.
+                //disable submit and clear selected factor hidden input by default
+                $('#loginSubmitButton').prop("disabled", true);
+                document.getElementById('selectedFactorId').value = "";
+
+                //Parse selection
+                var ddlValue = $(this).val().split(", ");
+
+                console.log("Selected Factor is: " + ddlValue[1]);
+
+                //This should be push factors
+                //TODO default type seems redundant. Clean it up.
+                //TODO: Support other factors beyond okta verify?
+                if (ddlValue[1] == "push" || ddlValue[1] == "default") {
+                    $('#VerifyTextBox').hide();
+                    $("#VerifyTextBox").css("display", "none");
+
+                    $('#SendCodeButton').hide();
+                    $("#SendCodeButton").css("display", "none");
+
+                    $('#loginSubmitButton').prop("disabled", false);
+                }
+                //This should be code submit factors that require a button to send a code.
+                else if (ddlValue[1] == "sms" || ddlValue[1] == "call" || ddlValue[1] == "email") {
+                    $('#VerifyTextBox').show();
+                    $('#SendCodeButton').show();
+                    $('#loginSubmitButton').prop("disabled", true); //TODO: This is redundant
+                    document.getElementById('selectedFactorId').value = ddlValue[0];
+                }
+                //This should be password, OTP generators, secret question, hardware tokens, etc. Anything that needs a code entered but no button to send one. 
+                else {
+                    $('#VerifyTextBox').show();
+                    $('#loginSubmitButton').prop("disabled", false);
+                }
+            });
+        });
+
+        $(window).on('load', function () {
+            // initialization of header
+            $.HSCore.components.HSHeader.init($('#js-header'));
+            $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+            // initialization of HSMegaMenu component
+            $('.js-mega-menu').HSMegaMenu({
+                event: 'hover',
+                pageContainer: $('.container'),
+                breakpoint: 991
+            });
+        });
+
+        $(window).on('resize', function () {
+            setTimeout(function () {
+                $.HSCore.components.HSTabs.init('[role="tablist"]');
+            }, 200);
+        });
+
+        //Signin button based on Okta login
+        oktaSignIn.session.get(function (res) {
+            // Session exists, show logged in state.
+            if (res.status === 'ACTIVE') {
+                //console.log(res.login);
+                document.getElementById("SignInAccountBtn1").innerHTML = "Sign Out";
+                document.getElementById("login-section-inner").style.display = "none";
+                return;
+            }
+            //Not Signed In
+            document.getElementById("SignInAccountBtn1").innerHTML = "Sign In";
+        });
+
+        function SendCode() {
+            var stateToken = getCookie("StateToken");
+            var verifyEndpoint = 'https://sso.gambcorp.com/api/v1/authn/factors/' + document.getElementById('selectedFactorId').value + '/verify'
+
+            //TODO: This Uses XMLHttpRequest which is being depricated because its synchronous. Fetch is prefered. Research later.
+            var request = new XMLHttpRequest();
+            request.open('POST', verifyEndpoint, true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send('{"stateToken": "' + stateToken + '"}');
+
+            //Enable the submit button once a code is sent.
+            document.getElementById("loginSubmitButton").disabled = false;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }</script>
+</body>
+
+</html>

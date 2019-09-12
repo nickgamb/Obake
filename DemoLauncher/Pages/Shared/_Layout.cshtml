@@ -1,0 +1,1023 @@
+﻿@using DemoLauncher.Interfaces;
+@inject IGlobalConfiguration _globalConfiguration;
+
+@{
+    //Layouts dont have a view model. Injecting config into the view directly.
+    string baseUrl = _globalConfiguration.Okta_Org;
+    string clientId = _globalConfiguration.Okta_ClientId;
+    string redirectUri = _globalConfiguration.Okta_RedirectUri;
+    string logo = _globalConfiguration.DemoLauncher_LogoUri;
+    string issuer = _globalConfiguration.Okta_Issuer;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Title -->
+    <title>Okta GambCorp Demo</title>
+
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="../../assets/vendor/bootstrap/bootstrap.min.css">
+    <!-- CSS Global Icons -->
+    <link rel="stylesheet" href="../../assets/vendor/icon-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/icon-line/css/simple-line-icons.css">
+    <link rel="stylesheet" href="../../assets/vendor/icon-etlinefont/style.css">
+    <link rel="stylesheet" href="../../assets/vendor/icon-line-pro/style.css">
+    <link rel="stylesheet" href="../../assets/vendor/icon-hs/style.css">
+    <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/dzsparallaxer.css">
+    <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/dzsscroller/scroller.css">
+    <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/advancedscroller/plugin.css">
+    <link rel="stylesheet" href="../../assets/vendor/animate.css">
+    <link rel="stylesheet" href="../../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/fancybox/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="../../assets/vendor/typedjs/typed.css">
+    <link rel="stylesheet" href="../../assets/vendor/hs-megamenu/src/hs.megamenu.css">
+    <link rel="stylesheet" href="../../assets/vendor/hamburgers/hamburgers.min.css">
+
+    <!-- CSS Unify -->
+    <link rel="stylesheet" href="../../assets/css/unify-core.css">
+    <link rel="stylesheet" href="../../assets/css/unify-components.css">
+    <link rel="stylesheet" href="../../assets/css/unify-globals.css">
+
+    <!-- Okta Signin Widget -->
+    <script src="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.16.0/js/okta-sign-in.min.js"
+            type="text/javascript"></script>
+    <link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.16.0/css/okta-sign-in.min.css"
+          type="text/css"
+          rel="stylesheet" />
+    <link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.16.0/css/okta-theme.css"
+          type="text/css"
+          rel="stylesheet" />
+
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="../../assets/css/custom.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="js-header" class="u-header u-header--static">
+        <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3 g-py-10">
+            <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal">
+                <div class="container">
+                    <!-- Responsive Toggle Button -->
+                    <button class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-minus-3 g-right-0" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                        <span class="hamburger hamburger--slider">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </span>
+                    </button>
+                    <!-- End Responsive Toggle Button -->
+                    <!-- Logo -->
+                    <img class="g-width-100 g-mr-40 g-mb-10 g-mb-0--sm" src="@logo" alt="Image description">
+                    <!--<a href="/Home/home-default" style="font-size:26px;" class="g-fill-main">{</a>
+                    <a href="/Home/home-default" style="font-size:20px;" class="g-fill-primary"><b>g a m b</b></a>
+                    <a href="/Home/home-default" style="font-size:26px;" class="g-fill-main">}</a>
+                    <!-- End Logo -->
+                    <!-- Navigation -->
+                    <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg g-mr-40--lg" id="navBar">
+                        <ul class="navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto">
+                            <!-- Home -->
+                            <li class="hs-has-mega-menu nav-item active g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut" data-max-width="100%" data-position="left">
+                                <a id="mega-menu-home" class="nav-link g-py-7 g-px-0" href="#" aria-haspopup="true" aria-expanded="false">
+                                    Home
+                                    <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
+                                </a>
+
+                                <!-- Mega Menu -->
+                                <div class="w-100 hs-mega-menu u-shadow-v11 font-weight-normal g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-mt-18 g-mt-8--lg--scrolling" aria-labelledby="mega-menu-home">
+                                    <div class="row align-items-stretch no-gutters">
+                                        <!-- Home (col) -->
+                                        <div class="col-lg-6">
+                                            <ul class="list-unstyled">
+                                                <li class="dropdown-item active">
+                                                    <a href="/Home/home-default" class="nav-link">Default</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-incredible" class="nav-link">Incredible</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-studio" class="nav-link">Studio</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-allure" class="nav-link">Allure</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-inspire" class="nav-link">Inspire</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-portfolio" class="nav-link">Portfolio</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-creative" class="nav-link">Creative</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-projects" class="nav-link">Projects</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- End Home (col) -->
+                                        <!-- Home (col) -->
+                                        <div class="col-lg-6 g-brd-left--lg g-brd-gray-light-v5">
+                                            <ul class="list-unstyled">
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-discover" class="nav-link">Discover</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-brave" class="nav-link">Brave</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-business" class="nav-link">Business</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-corporate" class="nav-link">Corporate</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-web-agency" class="nav-link">Web Agency</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-aspire" class="nav-link">Aspire</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-showcase" class="nav-link">Showcase</a>
+                                                </li>
+                                                <li class="dropdown-item ">
+                                                    <a href="/Home/home-news" class="nav-link">News</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- End Home (col) -->
+                                    </div>
+                                </div>
+                                <!-- End Mega Menu -->
+                            </li>
+                            <!-- End Home -->
+                            <!-- Login -->
+                            <li id="LoginMenu" class="hs-has-sub-menu nav-item  g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut" style="display:none">
+                                <a id="nav-link-login" class="nav-link g-py-7 g-px-0" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-login">Login Pages</a>
+
+                                <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu-login" aria-labelledby="nav-link-pages">
+                                    <!-- Login - Widget -->
+                                    <li class="dropdown-item hs-has-sub-menu ">
+                                        <a id="nav-link--pages--widget" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--pages--widget">Widget</a>
+
+                                        <!-- Submenu (level 2) -->
+                                        <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-minus-2" id="nav-submenu--pages--widget" aria-labelledby="nav-link--pages--about">
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Login/page-login-widget">Login</a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Login/page-login-and-signup-widget">Login With Registration</a>
+                                            </li>
+                                        </ul>
+                                        <!-- End Submenu (level 2) -->
+                                    </li>
+                                    <!-- End Login - Widget -->
+                                    <!-- Login - API -->
+                                    <li class="dropdown-item hs-has-sub-menu ">
+                                        <a id="nav-link--pages--api" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--pages--api">API</a>
+
+                                        <!-- Submenu (level 2) -->
+                                        <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-minus-2" id="nav-submenu--pages--api" aria-labelledby="nav-link--pages--about">
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Login/page-login-api">Login</a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Login/page-signup-api">Register</a>
+                                            </li>
+                                        </ul>
+                                        <!-- End Submenu (level 2) -->
+                                    </li>
+                                    <!-- End Login - API -->
+                                </ul>
+                            </li>
+                            <!-- End Login -->
+                            <!-- Demos -->
+                            <li class="nav-item hs-has-sub-menu  g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut">
+                                <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-demos">Demos</a>
+
+                                <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu-demos" aria-labelledby="nav-link-demos">
+                                    <!-- Demos - One Pages -->
+                                    <li class="dropdown-item hs-has-sub-menu ">
+                                        <a id="nav-link--demos--one-page" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--demos--one-page">One Pages</a>
+
+                                        <ul class="hs-sub-menu list-unstyled u-shadow-v11 u-dropdown-col-2 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-minus-2 hs-reversed" id="nav-submenu--demos--one-page" aria-labelledby="nav-link--demos--one-page">
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Accounting <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Agency <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">App <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Demos/one-pages/architecture">Architecture <span class="u-label g-rounded-3 g-font-size-10 g-bg-lightred g-py-3 g-pos-rel g-top-minus-1 g-ml-5">New</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Business <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Charity <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Сonsulting <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Construction <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Courses <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="/Demos/one-pages/corporate">Corporate <span class="u-label g-rounded-3 g-font-size-10 g-bg-lightred g-py-3 g-pos-rel g-top-minus-1 g-ml-5">New</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Event <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">GYM <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Lawyer <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Music <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Photography <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Real Estate <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Restaurant <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Shipping <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Spa <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Travel <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                            <li class="dropdown-item ">
+                                                <a class="nav-link" href="#">Wedding <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Demos - One Pages -->
+                                    <!-- Demos - Admin Template -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="#">Admin Template <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                    </li>
+                                    <!-- End Demos - Admin Template -->
+                                    <!-- Demos - E-Commerce -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="#">E-Commerce <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                    </li>
+                                    <!-- End Demos - E-Commerce -->
+                                    <!-- Demos - University -->
+                                    <!-- localhost hardcoded as a hack. fix this.  -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Demos/Education/home-page-1">Gamb University <span class="u-label g-rounded-3 g-font-size-10 g-bg-lightred g-py-3 g-pos-rel g-top-minus-1 g-ml-5">New</span></a>
+                                    </li>
+                                    <!-- End Demos - University -->
+                                    <!-- Demos - Marketing -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="#">Marketing <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                    </li>
+                                    <!-- End Demos - Marketing -->
+                                    <!-- Demos - Real Estate -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="#">Real Estate <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                    </li>
+                                    <!-- End Demos - Real Estate -->
+                                    <!-- Demos - Blogs & Magazines -->
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="#">Blogs &amp; Magazines  <span class="g-opacity-0_5">(Not Yet)</span></a>
+                                    </li>
+                                    <!-- End Demos - Blogs & Magazines -->
+                                </ul>
+                            </li>
+                            <!-- End Demos -->
+                            <!-- Profile -->
+                            <li id="ProfileMenu" class="nav-item hs-has-sub-menu  g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut" style="display:none">
+                                <a id="nav-link-profile" class="nav-link g-py-7 g-px-0" href="#" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-profile">Account</a>
+
+                                <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu-profile" aria-labelledby="nav-link-profile">
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-main-1">Main</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-profile-1">Profile</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-projects-1">Projects</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-comments-1">Comments</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-history-1">History</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-reviews-1">Reviews</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-settings-1">Settings</a>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                        <a class="nav-link" href="/Profile/page-profile-users-2">Contacts</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- End Profiles -->
+                        </ul>
+                    </div>
+                    <!-- End Navigation -->
+                    <div class="d-inline-block g-hidden-md-down g-pos-rel g-valign-middle g-pl-30 g-pl-0--lg">
+                        <a id="SignInAccountBtn" class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15" onclick="doAccountClick(); return false;" href=""></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- End Header -->
+    <!-- JS Global Compulsory -->
+    <script src="../../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="../../assets/vendor/popper.js/popper.min.js"></script>
+    <script src="../../assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- JS Implementing Plugins -->
+    <script src="../../assets/vendor/appear.js"></script>
+    <script src="../../assets/vendor/slick-carousel/slick/slick.js"></script>
+    <script src="../../assets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+    <script src="../../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../../assets/vendor/jquery.maskedinput/src/jquery.maskedinput.js"></script>
+    <script src="../../assets/vendor/dzsparallaxer/dzsparallaxer.js"></script>
+    <script src="../../assets/vendor/dzsparallaxer/dzsscroller/scroller.js"></script>
+    <script src="../../assets/vendor/dzsparallaxer/advancedscroller/plugin.js"></script>
+    <script src="../../assets/vendor/masonry/dist/masonry.pkgd.min.js"></script>
+    <script src="../../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../../assets/vendor/fancybox/jquery.fancybox.min.js"></script>
+    <script src="../../assets/vendor/slick-carousel/slick/slick.js"></script>
+    <script src="../../assets/vendor/typedjs/typed.min.js"></script>
+    <script src="../../assets/vendor/circles/circles.min.js"></script>
+    <script src="../../assets/vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+
+    <!-- JS Revolution Slider -->
+    <script src="../../assets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+    <script src="../../assets/vendor/revolution-slider/revolution-addons/particles/js/revolution.addon.particles.min.js"></script>
+
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="../../assets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+    <!-- JS Unify -->
+    <script src="../../assets/js/hs.core.js"></script>
+    <script src="../../assets/js/components/hs.header.js"></script>
+    <script src="../../assets/js/helpers/hs.hamburgers.js"></script>
+    <script src="../../assets/js/helpers/hs.height-calc.js"></script>
+    <script src="../../assets/js/components/hs.tabs.js"></script>
+    <script src="../../assets/js/components/hs.popup.js"></script>
+    <script src="../../assets/js/components/hs.progress-bar.js"></script>
+    <script src="../../assets/js/components/hs.scrollbar.js"></script>
+    <script src="../../assets/js/helpers/hs.not-empty-state.js"></script>
+    <script src="../../assets/js/helpers/hs.focus-state.js"></script>
+    <script src="../../assets/js/components/hs.masked-input.js"></script>
+    <script src="../../assets/js/components/hs.select.js"></script>
+    <script src="../../assets/js/components/text-animation/hs.text-slideshow.js"></script>
+    <script src="../../assets/js/components/hs.rating.js"></script>
+    <script src="../../assets/js/components/hs.onscroll-animation.js"></script>
+    <script src="../../assets/js/components/hs.counter.js"></script>
+    <script src="../../assets/js/components/hs.chart-pie.js"></script>
+    <script src="../../assets/js/components/hs.carousel.js"></script>
+    <script src="../../assets/js/components/hs.cubeportfolio.js"></script>
+    <script src="../../assets/js/components/hs.go-to.js"></script>
+
+    <!-- JS Custom -->
+    <script src="../../assets/js/custom.js"></script>
+
+    <script>$(document).on('ready', function () {
+            // Header
+            $.HSCore.components.HSHeader.init($('#js-header'));
+            $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+            // initialization of HSMegaMenu plugin
+            $('.js-mega-menu').HSMegaMenu({
+                event: 'hover',
+                pageContainer: $('.container'),
+                breakpoint: 991
+            });
+        });
+
+        //Okta Signin Widget
+        var oktaSignIn = new OktaSignIn({
+            baseUrl: '@baseUrl',
+            clientId: '@clientId',
+            redirectUri: '@redirectUri',
+            features: {
+                registration: true
+            },
+            authParams: {
+                issuer: '@issuer',
+                responseType: ['token', 'id_token'],
+                display: 'page'
+            }
+        });
+
+        if (oktaSignIn.token.hasTokensInUrl()) {
+            //Otka sdk token verification will not work because we are using multiple different auth concepts all in one site because this is a sales demo
+            //This is a hack to parse and store our tokens while bypassing the okta SDK tokenManager.
+            //Also, the token manager being a promise is shit deisgn because some of us want to code synchronously!
+
+            if (window.location.hash) {
+                var hash_array = location.hash.substring(1).split('&');
+                var hash_key_val = new Array(hash_array.length);
+
+                for (var i = 0; i < hash_array.length; i++) {
+                    hash_key_val[i] = hash_array[i].split('=');
+                }
+
+                var idToken = hash_key_val[0];
+                var accessToken = hash_key_val[1];
+
+                console.log(idToken[1]);
+                console.log(accessToken[1]);
+
+                // Save the tokens for later use, e.g. if the page gets refreshed:
+                document.cookie = "accessToken=" + accessToken[1];
+                document.cookie = "idToken=" + idToken[1];
+
+                //Adjust view buttons for logged in state
+                document.getElementById("SignInAccountBtn").innerHTML = "Sign Out";
+                document.getElementById("ProfileMenu").style.display = "block";
+
+                // Remove the tokens from the window location hash
+                window.location.hash = '';
+
+            }
+            else {
+                // handle errors as needed
+                console.error(err);
+            }
+        }
+        else {
+            //Sign in button based on Okta session
+            oktaSignIn.session.get(function (res) {
+                // Session exists, show logged in state.
+                if (res.status === 'ACTIVE') {
+
+                    //Adjust view buttons for logged in state
+                    document.getElementById("SignInAccountBtn").innerHTML = "Sign Out";
+                    document.getElementById("ProfileMenu").style.display = "block";
+
+                    console.log(getCookie("idToken"));
+
+                    return;
+
+                }
+                //Not Signed In
+                //Adjust view buttons for not logged in state
+                document.getElementById("SignInAccountBtn").innerHTML = "Sign In";
+                document.getElementById("LoginMenu").style.display = "block"
+            });
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function doAccountClick() {
+            oktaSignIn.session.get(function (res) {
+                // Session exists, show logged in state.
+                if (res.status === 'ACTIVE') {
+                    oktaSignIn.signOut();
+                    console.log('logged out');
+                    window.location.href = "/Home/home-default";
+                }
+                else
+                    window.location.href = "/Login/page-login-widget";
+            });
+        }</script>
+    <!-- Style Switcher -->
+    <aside class="u-ss" data-cookies-prefix="unify" data-defaults='[{
+              "customColor": "#72c02c",
+              "outerSpaces": "0px",
+              "contentFont": "Open Sans, Helvetica, Arial, sans-serif",
+              "headingFont": "Open Sans, Helvetica, Arial, sans-serif"
+           }]'>
+        <div class="u-ss-wrap">
+            <header class="u-ss-header">
+                <button class="u-ss-toggler g-color-primary" type="button">
+                    <i class="fa fa-cogs"></i>
+                </button>
+
+                <h2 class="u-ss__main-title">
+                    Style Switcher
+                </h2>
+            </header>
+
+            <div class="js-ss-scrollbar u-ss-body">
+                <form>
+                    <section class="u-ss-section">
+                        <div class="u-ss-control-wrap">
+                            <h3 class="u-ss-section__title">Predefined Styles</h3>
+                            <select class="js-ss-select js-ss-predefined-style u-ss-select" name="predefined-style" style="width: 100%;" data-placeholder="Select style" data-disable-search="true" data-open-icon="fa fa-angle-down" data-close-icon="fa fa-angle-up">
+                                <option></option>
+                                <option id="preDefSMain" value='[{
+                    "checkIDs": {"custom-colors": "clr1", "heading-font": "hFnt1", "font": "fnt1", "layout-styles": "layS1", "outer-spaces": "outS1", "custom-bg": "", "predefined-style": "preDefS1"},
+                    "preDefStyle": "default"
+                  }]' selected>
+                                    Main Style
+                                </option>
+                                <option id="preDefS1" value='[{
+                    "checkIDs": {"custom-colors": "clr2", "heading-font": "hFnt2", "font": "fnt2", "layout-styles": "layS2", "outer-spaces": "outS2", "custom-bg": "bg5", "predefined-style": "preDefS2"},
+                    "preDefStyle": "assets/style-switcher-predefined-styles/style1.css"
+                  }]'>
+                                    Style 1
+                                </option>
+                                <option id="preDefS2" value='[{
+                    "checkIDs": {"custom-colors": "clr3", "heading-font": "hFnt3", "font": "fnt3", "layout-styles": "layS3", "outer-spaces": "outS3", "custom-bg": "bg12", "predefined-style": "preDefS3"},
+                    "preDefStyle": "assets/style-switcher-predefined-styles/style2.css"
+                  }]'>
+                                    Style 2
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="u-ss-sub-section-wrap">
+                            <div class="u-ss-sub-section_half">
+                                <h3 class="u-ss-section__title">Heading Font</h3>
+                                <select class="js-ss-select js-ss-heading-font u-ss-select" name="heading-font" style="width: 100%;" data-placeholder="Select font" data-disable-search="true" data-open-icon="fa fa-angle-down" data-close-icon="fa fa-angle-up">
+                                    <option></option>
+                                    <option id="hFnt1" value='[
+                              {"headingFont":"\"Open Sans\",Helvetica,Arial,sans-serif"}
+                            ]' selected>
+                                        Open Sans
+                                    </option>
+                                    <option id="hFnt2" value='[
+                              {"headingFont":"\"Playfair Display\",Helvetica,Arial,serif"}
+                            ]'>
+                                        Playfair Display
+                                    </option>
+                                    <option id="hFnt3" value='[
+                              {"headingFont":"\"Roboto\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Roboto
+                                    </option>
+                                    <option id="hFnt4" value='[
+                              {"headingFont":"\"Raleway\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Raleway
+                                    </option>
+                                    <option id="hFnt5" value='[
+                              {"headingFont":"\"Spectral\",Helvetica,Arial,serif"}
+                            ]'>
+                                        Spectral
+                                    </option>
+                                    <option id="hFnt6" value='[
+                              {"headingFont":"\"Rubik\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Rubik
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="u-ss-sub-section_half">
+                                <h3 class="u-ss-section__title">Content Font</h3>
+                                <select class="js-ss-select js-ss-font u-ss-select" name="content-font" style="width: 100%;" data-placeholder="Select font" data-disable-search="true" data-open-icon="fa fa-angle-down" data-close-icon="fa fa-angle-up">
+                                    <option></option>
+                                    <option id="fnt1" value='[
+                              {"contentFont":"\"Open Sans\",Helvetica,Arial,sans-serif"}
+                            ]' selected>
+                                        Open Sans
+                                    </option>
+                                    <option id="fnt2" value='[
+                              {"contentFont":"\"Playfair Display\",Helvetica,Arial,serif"}
+                            ]'>
+                                        Playfair Display
+                                    </option>
+                                    <option id="fnt3" value='[
+                              {"contentFont":"\"Roboto\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Roboto
+                                    </option>
+                                    <option id="fnt4" value='[
+                              {"contentFont":"\"Raleway\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Raleway
+                                    </option>
+                                    <option id="fnt5" value='[
+                              {"contentFont":"\"Spectral\",Helvetica,Arial,serif"}
+                            ]'>
+                                        Spectral
+                                    </option>
+                                    <option id="fnt6" value='[
+                              {"contentFont":"\"Rubik\",Helvetica,Arial,sans-serif"}
+                            ]'>
+                                        Rubik
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="u-ss-section u-ss-section--theme-colors">
+                        <h3 class="u-ss-section__title">Theme Colors</h3>
+
+                        <div id="customColors" class="u-ss-check-section">
+                            <label class="u-ss-check">
+                                <input id="clr1" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#72c02c"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #72c02c;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr2" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#107ef4"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #107ef4;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr3" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#fd9233"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #fd9233;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr4" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#e74b3c"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #e74b3c;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr5" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#111111"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #111111;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr6" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#9b6bcc"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #9b6bcc;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr7" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#e81c62"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #e81c62;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr8" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#29d6e6"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #29d6e6;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr9" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#9c8061"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #9c8061;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr10" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#527bcc"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #527bcc;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr11" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#6639b6"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #6639b6;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr12" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#a10f2b"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #a10f2b;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr13" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#19ba9b"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #19ba9b;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                            <label class="u-ss-check">
+                                <input id="clr14" class="js-ss-color" name="custom-colors" type="radio" value='[
+                      {"customColor":"#4025d0"}
+                    ]'>
+
+                                <div class="u-ss-check__item" style="background-color: #4025d0;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="u-ss-section">
+                        <h3 class="u-ss-section__title">Custom Color Theme</h3>
+
+                        <div id="userColor">
+                            <div class="u-ss-control-wrap">
+                                <input class="u-ss__control" type="text" placeholder="Enter your color">
+                                <input class="js-ss-color-picker form-control" type="text">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="u-ss-section">
+                        <h3 class="u-ss-section__title">Layout Styles</h3>
+
+                        <div class="u-ss-radio-wrap">
+                            <div class="u-ss-radio-section">
+                                <label>
+                                    <input id="layS1" class="js-ss-classes js-ss-option-close" name="layout-styles" type="radio" value="" checked data-selectors="body" data-option-target="#customBG" data-check-item="#bg1">
+
+                                    <div class="u-ss-radio">Wide</div>
+                                </label>
+                            </div>
+
+                            <div class="u-ss-radio-section">
+                                <label>
+                                    <input id="layS2" class="js-ss-classes js-ss-option-open" name="layout-styles" type="radio" value="g-layout-boxed" data-selectors="body" data-option-target="#customBG">
+
+                                    <div class="u-ss-radio">Boxed</div>
+                                </label>
+                            </div>
+
+                            <div id="semiboxed" class="u-ss-radio-section" data-modal-target="#resolutionCaution" data-modal-effect="slide">
+                                <label id="layS3">
+                                    <input class="js-ss-classes js-ss-option-open" name="layout-styles" type="radio" value="g-layout-semiboxed" data-selectors="body" data-option-target="#customBG">
+
+                                    <div class="u-ss-radio">SemiBoxed</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <h3 class="u-ss-section__title">Outer Spaces</h3>
+
+                        <div class="u-ss-radio-wrap">
+                            <div class="u-ss-radio-section">
+                                <label>
+                                    <input id="outS1" class="js-ss-classes" name="outer-spaces" type="radio" value="" checked data-selectors="html">
+
+                                    <div class="u-ss-radio">None</div>
+                                </label>
+                            </div>
+
+                            <div class="u-ss-radio-section">
+                                <label>
+                                    <input id="outS2" class="js-ss-classes" name="outer-spaces" type="radio" value="u-outer-space-v1" data-selectors="html">
+
+                                    <div class="u-ss-radio">20px</div>
+                                </label>
+                            </div>
+
+                            <div class="u-ss-radio-section">
+                                <label>
+                                    <input id="outS3" class="js-ss-classes" name="outer-spaces" type="radio" value="u-outer-space-v2" data-selectors="html">
+
+                                    <div class="u-ss-radio">40px</div>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="u-ss-option">
+                        <section class="u-ss-section">
+                            <h3 class="u-ss-section__title">Boxed Background</h3>
+
+                            <div id="customBG" class="u-ss-check-section">
+                                <label class="u-ss-check">
+                                    <input id="bg1" class="js-ss-classes" name="custom-bg" type="radio" value="" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/none-bg.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg2" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v2" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img2.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg3" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v3" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img3.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg4" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v4" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img4.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg5" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v5" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img5.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg6" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v6" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img6.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg7" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v7" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img-temp/1920x1080/img7.jpg);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg8" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v8" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/bricks-white.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg9" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v9" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/math-dark.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg10" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v10" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/figures-light.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg11" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v11" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/footer-lodyas.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg12" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v12" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/doodles.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg13" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v13" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/darkness.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                                <label class="u-ss-check">
+                                    <input id="bg14" class="js-ss-classes" name="custom-bg" type="radio" value="g-bgi-v14" data-selectors="body">
+
+                                    <div class="u-ss-check__item" style="background-image: url(../../assets/img/bg/pattern/memphis-colorful.png);">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="u-ss-sub-section-wrap">
+                        <div class="u-ss-sub-section_half">
+                            <a id="getCSSSkin" class="u-ss-btn u-ss-btn--green" href="#!" role="button" data-content-target="[id^='less']" data-modal-target="#copyModal" data-modal-effect="fadein">
+                                Get CSS
+                            </a>
+                        </div>
+
+                        <div class="u-ss-sub-section_half">
+                            <button class="js-ss-reset u-ss-btn" type="reset">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/chosen/chosen.css">
+    <link rel="stylesheet" href="../../assets/vendor/prism/themes/prism.css">
+    <link rel="stylesheet" href="../../assets/vendor/custombox/custombox.min.css">
+    <link rel="stylesheet" href="../../assets/style-switcher/vendor/spectrum/spectrum.css">
+    <link rel="stylesheet" href="../../assets/style-switcher/vendor/spectrum/themes/sp-dark.css">
+    <link rel="stylesheet" href="../../assets/style-switcher/style-switcher.css">
+    <link rel="stylesheet" href="../../assets/css/custom.less">
+    <!-- End CSS -->
+    <!-- Scripts -->
+    <script src="../../assets/vendor/chosen/chosen.jquery.js"></script>
+    <script src="../../assets/vendor/image-select/src/ImageSelect.jquery.js"></script>
+    <script src="../../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../../assets/vendor/custombox/custombox.min.js"></script>
+    <script src="../../assets/vendor/clipboard/dist/clipboard.min.js"></script>
+
+    <!-- Prism -->
+    <script src="../../assets/vendor/prism/prism.js"></script>
+    <script src="../../assets/vendor/prism/components/prism-markup.min.js"></script>
+    <script src="../../assets/vendor/prism/components/prism-css.min.js"></script>
+    <script src="../../assets/vendor/prism/components/prism-clike.min.js"></script>
+    <script src="../../assets/vendor/prism/components/prism-javascript.min.js"></script>
+    <script src="../../assets/vendor/prism/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="../../assets/vendor/prism/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <!-- End Prism -->
+
+    <script src="../../assets/js/components/hs.scrollbar.js"></script>
+    <script src="../../assets/js/components/hs.select.js"></script>
+    <script src="../../assets/js/components/hs.modal-window.js"></script>
+    <script src="../../assets/js/components/hs.markup-copy.js"></script>
+
+    <script src="../../assets/style-switcher/vendor/cookiejs/jquery.cookie.js"></script>
+    <script src="../../assets/style-switcher/vendor/spectrum/spectrum.js"></script>
+    <script src="../../assets/style-switcher/style-switcher.js"></script>
+    <!-- End Scripts -->
+    <!-- End Style Switcher -->
+    @RenderBody()
+</body>
+</html>

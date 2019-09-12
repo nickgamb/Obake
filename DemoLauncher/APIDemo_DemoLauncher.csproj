@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Okta.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="Okta.Auth.Sdk" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System-Web-Helpers.dll" Version="1.0.0" />
+    <PackageReference Include="Okta.Sdk" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-1.html" />
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-6.html" />
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-5.html" />
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-4.html" />
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-2.html" />
+    <Content Remove="wwwroot\unify-main\ajax\projects\projects-3.html" />
+    <Content Remove="wwwroot\unify-main\ajax\team\team_member_1.html" />
+    <Content Remove="Pages\home-allure.cshtml" />
+    <Content Remove="Pages\home-aspire.cshtml" />
+    <Content Remove="Pages\home-brave.cshtml" />
+    <Content Remove="Pages\home-business.cshtml" />
+    <Content Remove="Pages\home-corporate.cshtml" />
+    <Content Remove="Pages\home-creative.cshtml" />
+    <Content Remove="Pages\home-discover.cshtml" />
+    <Content Remove="Pages\home-incredible.cshtml" />
+    <Content Remove="Pages\home-inspire.cshtml" />
+    <Content Remove="Pages\home-news.cshtml" />
+    <Content Remove="Pages\home-portfolio.cshtml" />
+    <Content Remove="Pages\home-projects.cshtml" />
+    <Content Remove="Pages\home-showcase.cshtml" />
+    <Content Remove="Pages\home-studio.cshtml" />
+    <Content Remove="Pages\home-web-agency.cshtml" />
+    <Content Remove="Pages\Profile\page-profile-users-1.cshtml" />
+    <Content Remove="Pages\Profile\page-profile-users-1-full-width.cshtml" />
+    <Content Remove="Pages\Profile\page-profile-users-2-full-width.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\_ViewStart.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\home-page-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-alumni-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-apply-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-campus-life-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-contacts-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-current-students-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-events-1.cshtml" />
+    <Content Remove="Pages\Demos\Education\Pages\page-faculty-and-staff-1.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Home\" />
+    <Folder Include="Pages\Login\" />
+    <Folder Include="Pages\Profile\" />
+    <Folder Include="Pages\Demos\" />
+    <Folder Include="Pages\Demos\one-pages\" />
+    <Folder Include="wwwroot\one-pages\" />
+    <Folder Include="Pages\Demos\Education\" />
+    <Folder Include="wwwroot\Education\" />
+    <Folder Include="wwwroot\assets\img-temp\Customers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Pages\Demos\Education\page-signin-2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pages\Notes.txt" />
+  </ItemGroup>
+</Project>

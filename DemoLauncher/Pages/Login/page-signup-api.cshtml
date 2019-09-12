@@ -1,0 +1,343 @@
+﻿@page
+@model PageSignupApiModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <main>
+        <!-- Login -->
+        <section class="dzsparallaxer auto-init height-is-based-on-content use-loading mode-scroll loaded dzsprx-readyall" data-options="{direction: 'reverse', settings_mode_oneelement_max_offset: '150'}">
+            <!-- Parallax Image -->
+            <div class="divimage dzsparallaxer--target w-100 u-bg-overlay g-bg-size-cover g-bg-bluegray-opacity-0_3--after" style="height: 140%; background-image: url(../../assets/img-temp/1920x1080/img2.jpg);"></div>
+            <!-- End Parallax Image -->
+
+            <div class="container g-pt-100 g-pb-20">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 flex-md-unordered align-self-center g-mb-80">
+                        <div id="signup-section" class="u-shadow-v21 g-bg-white rounded g-pa-50">
+                            <header class="text-center mb-4">
+                                <h2 class="h2 g-color-black g-font-weight-600">Signup</h2>
+                            </header>
+
+                            <!-- Form -->
+                            <form method="post" class="g-py-15">
+                                <div class="mb-4">
+                                    <input asp-for="FullNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="John Doe">
+                                </div>
+
+                                <div class="mb-4">
+                                    <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
+                                </div>
+
+                                <div class="g-mb-30">
+                                    <input asp-for="PasswordInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="tel" placeholder="Password">
+                                </div>
+
+                                <div class="text-center mb-5">
+                                    <button asp-page-handler="Signup" id="SignupSubmitButton" class="btn btn-block u-btn-primary rounded g-py-13">Signup</button>
+                                </div>
+
+                                <div class="d-flex justify-content-center text-center g-mb-30">
+                                    <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
+                                    <span class="align-self-center g-color-gray-dark-v5 mx-4">OR</span>
+                                    <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
+                                </div>
+
+                                <div class="row no-gutters g-mb-40">
+                                    <div class="col-6">
+                                        <button class="btn btn-block u-btn-facebook rounded g-px-30 g-py-11 mr-1" type="button">Facebook</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-block u-btn-twitter rounded g-px-30 g-py-11 ml-1" type="button">Twitter</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+
+                            <footer class="text-center">
+                                <p class="g-color-gray-dark-v5 mb-0">
+                                    Already have an account? <a class="g-font-weight-600" href="/Login/page-login-api">signin</a>
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <!-- End Login -->
+        <!-- Footer -->
+        <div id="contacts-section" class="g-bg-black-opacity-0_9 g-color-white-opacity-0_8 g-py-60">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">About Us</h2>
+                        </div>
+
+                        <p>Okta is the leading independent provider of identity for the enterprise. The Okta Identity Cloud enables organizations to securely connect the right people to the right technologies at the right time. With over 6,000 pre-built integrations to applications and infrastructure providers, Okta customers can easily and securely use the best technologies for their business. Over 6,500 organizations, including 20th Century Fox, JetBlue, Nordstrom, Slack, Teach for America and Twilio, trust Okta to help protect the identities of their workforces and customers.</p>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Latest Posts</h2>
+                        </div>
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/better-together-using-the-okta-integration-with-hashicorp-terraform/">Better together: Using the Okta integration with HashiCorp Terraform</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 27, 2019</div>
+                        </article>
+
+                        <hr class="g-brd-white-opacity-0_1 g-my-10">
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/heres-how-you-solve-the-lifecycle-management-problem/">Here’s How You Solve the Lifecycle Management Problem</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 27, 2019</div>
+                        </article>
+
+                        <hr class="g-brd-white-opacity-0_1 g-my-10">
+
+                        <article>
+                            <h3 class="h6 g-mb-2">
+                                <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/2019/08/okta-vmware-evolve-integrations-to-offer-more-customer-value-0/">Okta + VMware Evolve Integrations to Offer More Customer Value</a>
+                            </h3>
+                            <div class="small g-color-white-opacity-0_6">Aug 26, 2019</div>
+                        </article>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6 g-mb-40 g-mb-0--lg">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Useful Links</h2>
+                        </div>
+
+                        <nav class="text-uppercase1">
+                            <ul class="list-unstyled g-mt-minus-10 mb-0">
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/pricing/">Pricing</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/company/careers/">Careers</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/services/support/">Support</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-brd-bottom g-brd-white-opacity-0_1 g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/press-room/">Press Room</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://trust.okta.com/">Trust</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://status.okta.com/?_ga=2.225933018.1550227199.1566851798-1544007845.1560198683">Status</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/blog/">Blog</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/contact/">Contact Us</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                                <li class="g-pos-rel g-py-10">
+                                    <h4 class="h6 g-pr-20 mb-0">
+                                        <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/resources/customer-experience-center">Customer Experience Center</a>
+                                        <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i>
+                                    </h4>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- End Footer Content -->
+                    <!-- Footer Content -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="u-heading-v2-3--bottom g-brd-white-opacity-0_8 g-mb-20">
+                            <h2 class="u-heading-v2__title h6 text-uppercase mb-0">Our Contacts</h2>
+                        </div>
+
+                        <address class="g-bg-no-repeat g-font-size-12 mb-0" style="background-image: url(../../assets/img/maps/map2.png);">
+                            <!-- Location -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">100 1st St 6th floor<br>San Francisco, CA 94105</p>
+                            </div>
+                            <!-- End Location -->
+                            <!-- Phone -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">(888) 722-7871</p>
+                            </div>
+                            <!-- End Phone -->
+                            <!-- Email and Website -->
+                            <div class="d-flex g-mb-20">
+                                <div class="g-mr-10">
+                                    <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
+                                        <i class="fa fa-globe"></i>
+                                    </span>
+                                </div>
+                                <p class="mb-0">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/contact-sales/">Contact Sales</a>
+                                    <br>
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com">https://www.okta.com</a>
+                                </p>
+                            </div>
+                            <!-- End Email and Website -->
+                        </address>
+                    </div>
+                    <!-- End Footer Content -->
+                </div>
+            </div>
+        </div>
+        <!-- End Footer -->
+        <!-- Copyright Footer -->
+        <footer class="g-bg-gray-dark-v1 g-color-white-opacity-0_8 g-py-20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 text-center text-md-left g-mb-10 g-mb-0--md">
+                        <div class="d-lg-flex">
+                            <small class="d-block g-font-size-default g-mr-10 g-mb-10 g-mb-0--md">&copy; 2019 Okta Inc. All Rights Reserved. Various trademarks held by their respective owners.</small>
+                            <ul class="u-list-inline">
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/privacy-policy/">Privacy Policy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/security/">Security</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="https://www.okta.com/faq/">FAQ</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <span>|</span>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="g-color-white-opacity-0_8 g-color-white--hover" href="http://developer.okta.com/">Developer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 align-self-center">
+                        <ul class="list-inline text-center text-md-right mb-0">
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Facebook">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Skype">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-skype"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Linkedin">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Pinterest">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Twitter">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Dribbble">
+                                <a href="#" class="g-color-white-opacity-0_5 g-color-white--hover">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Copyright Footer -->
+        <a class="js-go-to u-go-to-v1" href="#" data-type="fixed" data-position='{
+     "bottom": 15,
+     "right": 15
+   }' data-offset-top="400" data-compensation="#js-header" data-show-effect="zoomIn">
+            <i class="hs-icon hs-icon-arrow-top"></i>
+        </a>
+    </main>
+
+    <div class="u-outer-spaces-helper"></div>
+
+    <!-- JS Plugins Init. -->
+    <script>$(document).on('ready', function () {
+            // initialization of tabs
+            $.HSCore.components.HSTabs.init('[role="tablist"]');
+
+            // initialization of go to
+            $.HSCore.components.HSGoTo.init('.js-go-to');
+        });
+
+        $(window).on('load', function () {
+            // initialization of header
+            $.HSCore.components.HSHeader.init($('#js-header'));
+            $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+            // initialization of HSMegaMenu component
+            $('.js-mega-menu').HSMegaMenu({
+                event: 'hover',
+                pageContainer: $('.container'),
+                breakpoint: 991
+            });
+        });
+
+        $(window).on('resize', function () {
+            setTimeout(function () {
+                $.HSCore.components.HSTabs.init('[role="tablist"]');
+            }, 200);
+        });
+        </script>
+</body>
+
+</html>
