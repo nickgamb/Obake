@@ -1,9 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Education\**" />
+    <Compile Remove="wwwroot\one-pages\**" />
+    <Content Remove="wwwroot\Education\**" />
+    <Content Remove="wwwroot\one-pages\**" />
+    <EmbeddedResource Remove="wwwroot\Education\**" />
+    <EmbeddedResource Remove="wwwroot\one-pages\**" />
+    <None Remove="wwwroot\Education\**" />
+    <None Remove="wwwroot\one-pages\**" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -62,9 +73,7 @@
     <Folder Include="Pages\Profile\" />
     <Folder Include="Pages\Demos\" />
     <Folder Include="Pages\Demos\one-pages\" />
-    <Folder Include="wwwroot\one-pages\" />
     <Folder Include="Pages\Demos\Education\" />
-    <Folder Include="wwwroot\Education\" />
     <Folder Include="wwwroot\assets\img-temp\Customers\" />
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
