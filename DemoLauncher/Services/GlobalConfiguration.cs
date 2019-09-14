@@ -59,13 +59,13 @@ namespace DemoLauncher.Services
             var context = httpContextAccessor.HttpContext;
 
             //Request.Host should be formatted as subdomain.appName.unidemo.online or, in the case of debugging, lcoalhost:port
-            string[] host = context.Request.Host.ToString().Split(".");
+            string host = context.Request.Host.ToString();
 
             //Ensure that we have a host string
             if (host != null)
             {
                 //If the host is localhost, pull debug subdomain and app name
-                if (host[0].Contains("localhost"))
+                if (host.Contains("localhost"))
                 {
                     subdomain = _configuration["AppSettings:UDP_Subdomain"];
                     app_name = _configuration["AppSettings:UDP_AppName"];
@@ -75,14 +75,19 @@ namespace DemoLauncher.Services
                 {
                     try
                     {
-                        subdomain = host[0];
-                        app_name = host[1];
+                        string[] hostParts = host.Split(".");
+                        subdomain = hostParts[0];
+                        app_name = hostParts[1];
                     }
                     catch (Exception ex)
                     {
                         //TODO: Handle Errors
                     }
                 }
+            }
+            else
+            {
+                //TODO: Handle error getting host
             }
 
             //Pull the config json and put it in AppConfig
@@ -102,41 +107,39 @@ namespace DemoLauncher.Services
                         string responseString = responseContent.ReadAsStringAsync().Result;
 
                         AppConfig = JObject.Parse(responseString);
+
+                        //Populate config variables with config from UDP
+
+                        //Okta Settings
+                        Okta_Org = AppConfig["okta_org_name"];
+                        Okta_APIToken = AppConfig["okta_api_token"];
+                        Okta_ClientId = AppConfig["client_id"];
+                        Okta_Issuer = AppConfig["issuer"];
+                        Okta_RedirectUri = AppConfig["redirect_uri"];
+
+                        //App Settings
+                        DemoLauncher_LogoUri = AppConfig["settings"]["app_logo"]; //The Logo to use through out the demo
+                        DemoLauncher_JumboImageUri = AppConfig["settings"]["jumbo_img_uri"]; //The jumbotron image
+                        DemoLauncher_VideoUri = AppConfig["settings"]["video_uri"]; //The jumbotron video
+                        DemoLauncher_IntroBlurb_Title = AppConfig["settings"]["intro_blurb_title"]; //The jumbotron blurb title
+                        DemoLauncher_IntroBlurb = AppConfig["settings"]["intro_blurb"]; //The jumbotron blurb
+                        DemoLauncher_BodyBlurb1_Title = AppConfig["settings"]["body_blurb1_title"]; //The first body blurb title
+                        DemoLauncher_BodyBlurb1 = AppConfig["settings"]["body_blurb1"]; //The first body blurb
+                        DemoLauncher_BodyBlurb2_Title = AppConfig["settings"]["body_blurb2_title"];//The second body blurb title
+                        DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
+                        DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
+                        DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
                     }
                 }
             }
             catch (Exception exception)
             {
                 //TODO: Log that we cant reach UDP
-                Console.WriteLine(exception);
             }
 
-            //Make sure we have a config
-            if (AppConfig != null)
-            {
-                //Populate config variables with config from UDP
-
-                //Okta Settings
-                Okta_Org = AppConfig["okta_org_name"];
-                Okta_APIToken = AppConfig["okta_api_token"];
-                Okta_ClientId = AppConfig["client_id"];
-                Okta_Issuer = AppConfig["issuer"];
-                Okta_RedirectUri = AppConfig["redirect_uri"];
-
-                //App Settings
-                DemoLauncher_LogoUri = AppConfig["settings"]["app_logo"]; //The Logo to use through out the demo
-                DemoLauncher_JumboImageUri = AppConfig["settings"]["jumbo_img_uri"]; //The jumbotron image
-                DemoLauncher_VideoUri = AppConfig["settings"]["video_uri"]; //The jumbotron video
-                DemoLauncher_IntroBlurb_Title = AppConfig["settings"]["intro_blurb_title"]; //The jumbotron blurb title
-                DemoLauncher_IntroBlurb = AppConfig["settings"]["intro_blurb"]; //The jumbotron blurb
-                DemoLauncher_BodyBlurb1_Title = AppConfig["settings"]["body_blurb1_title"]; //The first body blurb title
-                DemoLauncher_BodyBlurb1 = AppConfig["settings"]["body_blurb1"]; //The first body blurb
-                DemoLauncher_BodyBlurb2_Title = AppConfig["settings"]["body_blurb2_title"];//The second body blurb title
-                DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
-                DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
-                DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
-            }
-            else
+            //Check if config was set correctly
+            //TODO: Handle each variable in separate if to only use local when needed
+            if (Okta_Org == null)
             {
                 //use a local config becasue we couldnt reach UDP
 
