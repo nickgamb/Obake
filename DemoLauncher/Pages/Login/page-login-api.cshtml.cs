@@ -102,24 +102,30 @@ namespace DemoLauncher.Pages
                     SetStateToken(authResponse.StateToken);
                     return Page();
                 case "PASSWORD_WARN":
+                    //TODO: Warn the user if their password is close to expiration 
                     //Getting close to expire, ask user to reset
                     return Page();
                 case "PASSWORD_EXPIRED":
+                    //TODO: Support expired passwords
                     //Password is expired, force change password
                     return Page();
                 case "RECOVERY":
+                    //TODO: Support account recovery
                     //Ask user password recovery question
                     return Page();
                 case "RECOVERY_CHALLENGE":
                     //Submit answer to recovery question
                     return Page();
                 case "PASSWORD_RESET":
+                    //TODO: Support passowrd reset
                     //Submit new password
                     return Page();
                 case "LOCKED_OUT":
+                    //TODO: Support locked out accounts
                     //Show error or support self service reecovery
                     return Page();
                 case "MFA_ENROLL":
+                    //TODO: Support Enrollment of new factos
                     //Tell user tht they need to enroll the mfa factor
                     return Page();
                 case "MFA_ENROLL_ACTIVATE":
