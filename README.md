@@ -97,10 +97,19 @@ Obake can be configured to run in many ways. However, the first step is to compi
     Please add the following to your Okta org:
     * Add redirect_uri = `{Scheme}://{ServiceHost}:{ServicePort}` to your OpenID Connect app
     * Add a CORS entry for ``{Scheme}://{ServiceHost}:{ServicePort}``
+    
+    **Notes:**
+    *By default, your redirect uri and cors uri should be:
+    
+    ```http://localhost:52261/```
+    *Default uri scheme can be cuanged in lauchSettings.json in Visual Studio
 
 5. Run the command:
     ```
-    docker run -it -p 8000:8000 --env-file=env.list -t zzkhoo/okta-api-demo:latest
+    Docker build -f "C:\ObakePath\Okta_DemoLauncher\DemoLauncher\Dockerfile" -t apidemodemolauncher:dev --target base  --label "com.microsoft.created-by=visual-studio" --label "com.microsoft.visual-studio.project-name=APIDemo_DemoLauncher" "C:\ObakePath\Okta_DemoLauncher" 
+    
+    docker run -dt -v "C:\Users\userName\vsdbg\vs2017u5:/remote_debugger:rw" -v "C:\ObakePath\Okta_DemoLauncher\DemoLauncher:/app" -v "C:\Users\user\.nuget\packages\:/root/.nuget/fallbackpackages2" -v "C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages" -e "DOTNET_USE_POLLING_FILE_WATCHER=1" -e "ASPNETCORE_ENVIRONMENT=Development" -e "NUGET_PACKAGES=/root/.nuget/fallbackpackages2" -e "NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2" -p 52261:80 --entrypoint tail apidemodemolauncher:dev -f /dev/null 
+docker: Error response from daemon: Drive has not been shared.
     ```
     
 ## 3. Run Locally
