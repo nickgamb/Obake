@@ -32,11 +32,6 @@ This application will help you demonstrate:
 2. The entire WWWROOT folder for this project is not public because it contains source and file content that cannot be open sourced. To use this project as described below, you will need the WWWROOT folder or the app will not render correctly. If you are an Otka employee, and feel that you should have access to this content, please contact the repo owners. 
 3. Please take a moment to review the Projects tab and Issues tab here in github. This will give you a better idea of what is being worked on and what is planned.
 
-**Note:** This project is built with .net core 2.2 and is fully cross platform.
-
-You can either run the .net app locally in Visual Studio by cloning this repo or,
-more conveniently, build an Docker container.
-
 ## 0. Configure your Okta Org
 
 1. Configure and OIDC app in your Okta org and note the Client ID and Issuer
@@ -50,6 +45,7 @@ Obake can be configured to run in many ways. However, the first step is to compi
 
 **Notes:**
 
+* This project is built with .net core 2.2 and is fully cross platform.
 * 2019 Community was used to create the application so it is the most recomended version. 
 * Obake is cross platform so Visual Studio for Windows or Mac is supported. 
 * Obake can be published driectly from Visual Studio to file (for use with Linux), to AWS, to Azure, or directly to a Windows Server. 
