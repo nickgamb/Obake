@@ -6,8 +6,8 @@ Obake is an asp.net core razor pages applicaiton that is fully customizable usng
 
 Obake showcases the following:
 1. Authentication
-* [Okta Sign-In Widget](https://github.com/okta/okta-signin-widget).
-* Custom authentication experience purly using API (.net core example using Okta [.net Auth SDK](https://github.com/okta/okta-auth-dotnet)
+  * [Okta Sign-In Widget](https://github.com/okta/okta-signin-widget).
+  * Custom authentication experience purly using API (.net core example using Okta [.net Auth SDK](https://github.com/okta/okta-auth-dotnet)
 2. Okta Universal Directory for User Profiles
 3. User management purly using API (.net core example using Okta [.net Management SDK](https://github.com/okta/okta-sdk-dotnet)
 3. ABAC and RBAC
