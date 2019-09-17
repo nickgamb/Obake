@@ -88,7 +88,7 @@ Obake can be configured to run in many ways. However, the first step is to compi
 ```
 
    **Notes:**
-   - Obake is coded to first try to get app settings from the Okta UDP. It will first try to parse the host url to see if an okta subdomain and app name are present. If it is not, or if it contains localhost, it will then try to pull a UDP subdomain and app name from the local appsettings.json and then try to reach out to UDP to get the app settings. If Obake is unable to get any app settings from UDP, it will default to what is in appsettings.json.
+   - Obake is coded to first try to get app settings from the Okta UDP. It will first try to parse the host url to see if an okta subdomain and app name are present. If it is not, or if it contains localhost, it will then try to pull a UDP subdomain and app name from the local appsettings.json and then try to reach out to UDP to get the app settings. If Obake is unable to get any app settings from UDP, it will default to what is in appsettings.json. Refer to [GlobalConfiguration.cs](https://github.com/nickgamb/Obake/blob/master/DemoLauncher/Services/GlobalConfiguration.cs) for details on the config logic.
 
 
 4. Launch APIDemo_Okta.sln
