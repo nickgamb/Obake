@@ -172,7 +172,7 @@
 
         function SendCode() {
             var stateToken = getCookie("StateToken");
-            var verifyEndpoint = 'https://sso.gambcorp.com/api/v1/authn/factors/' + document.getElementById('selectedFactorId').value + '/verify'
+            var verifyEndpoint = '@Model.baseUrl/api/v1/authn/factors/' + document.getElementById('selectedFactorId').value + '/verify'
 
             //TODO: This Uses XMLHttpRequest which is being depricated because its synchronous. Fetch is prefered. Research later.
             var request = new XMLHttpRequest();
