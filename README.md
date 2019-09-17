@@ -106,10 +106,9 @@ Obake can be configured to run in many ways. However, the first step is to compi
 
 5. Run the command:
     ```
-    Docker build -f "C:\ObakePath\Okta_DemoLauncher\DemoLauncher\Dockerfile" -t apidemodemolauncher:dev --target base  --label "com.microsoft.created-by=visual-studio" --label "com.microsoft.visual-studio.project-name=APIDemo_DemoLauncher" "C:\ObakePath\Okta_DemoLauncher" 
+    docker build -f "C:\ObakePath\Okta_DemoLauncher\DemoLauncher\Dockerfile" -t apidemodemolauncher:dev --target base  --label "com.microsoft.created-by=visual-studio" --label "com.microsoft.visual-studio.project-name=APIDemo_DemoLauncher" "C:\ObakePath\Okta_DemoLauncher" 
     
     docker run -dt -v "C:\Users\userName\vsdbg\vs2017u5:/remote_debugger:rw" -v "C:\ObakePath\Okta_DemoLauncher\DemoLauncher:/app" -v "C:\Users\user\.nuget\packages\:/root/.nuget/fallbackpackages2" -v "C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages" -e "DOTNET_USE_POLLING_FILE_WATCHER=1" -e "ASPNETCORE_ENVIRONMENT=Development" -e "NUGET_PACKAGES=/root/.nuget/fallbackpackages2" -e "NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2" -p 52261:80 --entrypoint tail apidemodemolauncher:dev -f /dev/null 
-docker: Error response from daemon: Drive has not been shared.
     ```
     
 ## 3. Run Locally
