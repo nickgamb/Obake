@@ -24,7 +24,7 @@ This application will help you demonstrate:
 8. Okta user management 
 9. ABAC / RBAC
 
-**KNOWN LIMITATIONS**
+## KNOWN LIMITATIONS
 
 * Obake is currently in development and has several limitations
 
