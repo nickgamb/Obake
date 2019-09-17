@@ -112,7 +112,7 @@ namespace DemoLauncher.Services
 
                         //Okta Settings
                         Okta_Org = AppConfig["okta_org_name"];
-                        Okta_APIToken = AppConfig["okta_api_token"];
+                        Okta_APIToken = AppConfig["settings"]["okta_api_token"];
                         Okta_ClientId = AppConfig["client_id"];
                         Okta_Issuer = AppConfig["issuer"];
                         Okta_RedirectUri = AppConfig["redirect_uri"];
@@ -137,30 +137,73 @@ namespace DemoLauncher.Services
                 //TODO: Log that we cant reach UDP
             }
 
-            //Check if config was set correctly
-            //TODO: Handle each variable in separate if to only use local when needed
+            //Use a local config if we couldnt reach UDP or value is null
+
+            //Okta Settings
             if (Okta_Org == null)
             {
-                //use a local config becasue we couldnt reach UDP
-
-                //Otka Settings
                 Okta_Org = _configuration["AppSettings:okta_org_name"];
+            }
+            if (Okta_APIToken == null)
+            {
                 Okta_APIToken = _configuration["AppSettings:okta_api_token"];
+            }
+            if (Okta_ClientId == null)
+            {
                 Okta_ClientId = _configuration["AppSettings:client_id"];
+            }
+            if (Okta_Issuer == null)
+            {
                 Okta_Issuer = _configuration["AppSettings:issuer"];
+            }
+            if (Okta_RedirectUri == null)
+            {
                 Okta_RedirectUri = _configuration["AppSettings:redirect_uri"];
+            }
 
-                //App Settings
+            //App Settings
+            if (DemoLauncher_LogoUri == null)
+            {
                 DemoLauncher_LogoUri = _configuration["AppSettings:app_logo"]; //The Logo to use through out the demo
+            }
+            if (DemoLauncher_JumboImageUri == null)
+            {
                 DemoLauncher_JumboImageUri = _configuration["AppSettings:jumbo_img_uri"]; //The jumbotron image
+            }
+            if (DemoLauncher_VideoUri == null)
+            {
                 DemoLauncher_VideoUri = _configuration["AppSettings:video_uri"]; //The jumbotron video
+            }
+            if (DemoLauncher_IntroBlurb_Title == null)
+            {
                 DemoLauncher_IntroBlurb_Title = _configuration["AppSettings:intro_blurb_title"]; //The jumbotron blurb title
+            }
+            if (DemoLauncher_IntroBlurb == null)
+            {
                 DemoLauncher_IntroBlurb = _configuration["AppSettings:intro_blurb"]; //The jumbotron blurb
+            }
+            if (DemoLauncher_BodyBlurb1_Title == null)
+            {
                 DemoLauncher_BodyBlurb1_Title = _configuration["AppSettings:body_blurb1_title"]; //The first body blurb title
+            }
+            if (DemoLauncher_BodyBlurb1 == null)
+            {
                 DemoLauncher_BodyBlurb1 = _configuration["AppSettings:body_blurb1"]; //The first body blurb
+            }
+            if (DemoLauncher_BodyBlurb2_Title == null)
+            {
                 DemoLauncher_BodyBlurb2_Title = _configuration["AppSettings:body_blurb2_title"]; //The second body blurb title
+            }
+            if (DemoLauncher_BodyBlurb2 == null)
+            {
                 DemoLauncher_BodyBlurb2 = _configuration["AppSettings:body_blurb2"]; //The second body blurb
+            }
+            if (DemoLauncher_BodyBlurb3_Title == null)
+            {
                 DemoLauncher_BodyBlurb3_Title = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb title
+            }
+            if(DemoLauncher_BodyBlurb3 == null)
+            { 
                 DemoLauncher_BodyBlurb3 = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb
             }
         }

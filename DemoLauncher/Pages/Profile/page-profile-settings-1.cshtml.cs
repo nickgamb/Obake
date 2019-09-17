@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IdentityModel.Tokens.Jwt;
 using Okta.Sdk;
+using DemoLauncher.Interfaces;
+using DemoLauncher.Services;
 
 namespace DemoLauncher.Pages
 {
-    public class PageProfileSettings1Model : PageModel
+    public class PageProfileModel : PageModel
     {
         /**************************
          * Global config settings *
          **************************/
 
-        //TODO: Move domain to config
-        private static string oktaDomain = "https://sso.gambcorp.com";
-        //TODO: pull token from config
-        private static string oktaAPIToken = "00ACVUnE7GYvfZHpWYuJwHR8bvm2Ts82-uYWHdUmQh";
+        //Global Config
+        private readonly IGlobalConfiguration _globalConfiguration;
 
         /**********************
         * Getters and Setters*
@@ -43,7 +43,14 @@ namespace DemoLauncher.Pages
         [BindProperty]
         public string ErrorMessage { get; set; }
 
+        /*********************************
+         * Class setup and global config *
+         *********************************/
 
+        public PageProfileModel(IGlobalConfiguration globalConfiguration)
+        {
+            _globalConfiguration = globalConfiguration;
+        }
 
         /************************
          * On Every Get**********
@@ -54,8 +61,8 @@ namespace DemoLauncher.Pages
             //Create a new okta client to get profiule data for the user
             var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
             {
-                OktaDomain = oktaDomain,
-                Token = oktaAPIToken
+                OktaDomain = _globalConfiguration.Okta_Org,
+                Token = _globalConfiguration.Okta_APIToken
             });
 
             oktaProfile.Email = GetUserName();
@@ -114,8 +121,8 @@ namespace DemoLauncher.Pages
         {
             var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
             {
-                OktaDomain = oktaDomain,
-                Token = oktaAPIToken
+                OktaDomain = _globalConfiguration.Okta_Org,
+                Token = _globalConfiguration.Okta_APIToken
             });
 
             oktaProfile.Email = GetUserName();
@@ -158,8 +165,8 @@ namespace DemoLauncher.Pages
                 //Post password reset to Okta
                 var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
                 {
-                    OktaDomain = oktaDomain,
-                    Token = oktaAPIToken
+                    OktaDomain = _globalConfiguration.Okta_Org,
+                    Token = _globalConfiguration.Okta_APIToken
                 });
 
                 oktaProfile.Email = GetUserName();

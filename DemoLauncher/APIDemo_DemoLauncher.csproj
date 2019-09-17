@@ -27,7 +27,6 @@
     <PackageReference Include="Okta.Auth.Sdk" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="System-Web-Helpers.dll" Version="1.0.0" />
     <PackageReference Include="Okta.Sdk" Version="1.2.2" />
   </ItemGroup>
 
