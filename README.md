@@ -108,7 +108,7 @@ Obake can be configured to run in many ways. However, the first step is to compi
     * By default, your redirect uri and cors uri should be:
     
     ```http://localhost:52261/```
-    *Default uri scheme can be cuanged in lauchSettings.json in Visual Studio
+    * Default uri scheme can be cuanged in lauchSettings.json in Visual Studio
 
 5. Run the command:
     ```
