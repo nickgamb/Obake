@@ -4,6 +4,14 @@
     ViewData["Title"] = "Home page";
 }
 
+@using DemoLauncher.Interfaces;
+@inject IGlobalConfiguration _globalConfiguration;
+
+@{
+    //Layouts dont have a view model. Injecting config into the view directly.
+    string baseUrl = _globalConfiguration.Okta_Org;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <body>
@@ -93,7 +101,8 @@
 
 
     <!-- JS Plugins Init. -->
-    <script>$(document).on('ready', function () {
+    <script>
+$(document).on('ready', function () {
             // initialization of tabs
             $.HSCore.components.HSTabs.init('[role="tablist"]');
 
@@ -130,7 +139,7 @@
                     $('#loginSubmitButton').prop("disabled", true); //TODO: This is redundant
                     document.getElementById('selectedFactorId').value = ddlValue[0];
                 }
-                //This should be password, OTP generators, secret question, hardware tokens, etc. Anything that needs a code entered but no button to send one. 
+                //This should be password, OTP generators, secret question, hardware tokens, etc. Anything that needs a code entered but no button to send one.
                 else {
                     $('#VerifyTextBox').show();
                     $('#loginSubmitButton').prop("disabled", false);
@@ -172,7 +181,7 @@
 
         function SendCode() {
             var stateToken = getCookie("StateToken");
-            var verifyEndpoint = '@Model.baseUrl/api/v1/authn/factors/' + document.getElementById('selectedFactorId').value + '/verify'
+            var verifyEndpoint = '@baseUrl/api/v1/authn/factors/' + document.getElementById('selectedFactorId').value + '/verify'
 
             //TODO: This Uses XMLHttpRequest which is being depricated because its synchronous. Fetch is prefered. Research later.
             var request = new XMLHttpRequest();

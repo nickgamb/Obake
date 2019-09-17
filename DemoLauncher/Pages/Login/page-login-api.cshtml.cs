@@ -26,10 +26,6 @@ namespace DemoLauncher.Pages
          * Getters and Setters*
          **********************/
 
-        //okta base url
-        [BindProperty]
-        public string baseUrl { get; set; }
-
         //input fields from page
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -69,9 +65,6 @@ namespace DemoLauncher.Pages
          ************************/
         public void OnGet()
         {
-            //Set our config variables so that our view can use them
-            baseUrl = _globalConfiguration.Okta_Org;
-
             var sessionName = new Byte[20];
             if (!HttpContext.Session.TryGetValue("StateToken", out sessionName))
             {
