@@ -54,7 +54,7 @@ Obake can be configured to run in many ways. However, the first step is to compi
 
 1. Go to the [Visual Studio](https://visualstudio.microsoft.com/) home page, download, and install.
 2. Clone this repo to your local machine 
-3. In the root dirctory (same folder as the web.config), create a new text file called appsettings.json and use the following to populate it.
+3. In the root dirctory (same folder as the web.config), create a new file called appsettings.json and use the following to populate it.
 
 ```javascript{
   "Logging": {
@@ -65,7 +65,7 @@ Obake can be configured to run in many ways. However, the first step is to compi
   "AppSettings": {
     "UDP_BaseUrl": "https://udpurl.io",
     "UDP_Subdomain": "udpSubDomain",
-    "UDP_AppName": "Obake",
+    "UDP_AppName": "obake",
     "okta_org_name": "https://org.okta.com",
     "okta_api_token": "oktaAPIToken",
     "client_id": "oktaClientId",
@@ -86,6 +86,10 @@ Obake can be configured to run in many ways. However, the first step is to compi
   "AllowedHosts": "*"
 }
 ```
+
+   **Notes:**
+   - Obake is coded to first try to get app settings from the Okta UDP. It will first try to parse the host url to see if an okta subdomain and app name are present. If it is not, or if it contains localhost, it will then try to pull a UDP subdomain and app name from the local appsettings.json and then try to reach out to UDP to get the app settings. If Obake is unable to get any app settings from UDP, it will default to what is in appsettings.json.
+
 
 4. Launch APIDemo_Okta.sln
 5. Change the configuration from Debug to Release
