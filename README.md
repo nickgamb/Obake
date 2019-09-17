@@ -24,12 +24,18 @@ This application will help you demonstrate:
 8. Okta user management 
 9. ABAC / RBAC
 
+**KNOWN LIMITATIONS**
 
+* Obake is currently in development and has several limitations
+
+1. Some Okta auth states are not yet supported in the Login API Example. The most prominant example is MFA Factor Enroll state which happens when a new user has an MFA requirement but has not enrolled the factor. To Demo MFA Factor Enrollment, use the Widget Login Pages instead of the API Login Pages.
+2. The entire WWWROOT folder for this project is not public because it contains source and file content that cannot be open sourced. To use this project as described below, you will need the WWWROOT folder or the app will not render correctly. If you are an Otka employee, and feel that you should have access to this content, please contact the repo owners. 
+3. Please take a moment to review the Projects tab and Issues tab here in github. This will give you a better idea of what is being worked on and what is planned.
 
 **Note:** This project is built with .net core 2.2 and is fully cross platform.
 
 You can either run the .net app locally in Visual Studio by cloning this repo or,
-more conveniently, use an available Docker container.
+more conveniently, build an Docker container.
 
 ## 0. Configure your Okta Org
 
