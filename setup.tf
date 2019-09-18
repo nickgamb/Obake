@@ -66,18 +66,18 @@ resource "okta_user_schema" "addProfilePictureUriAttribute" {
   type   = "string"
   master = "PROFILE_MASTER"
 }
-resource "okta_trusted_origin" "bodUnidemo" {
-  name   = "${var.udp_subdomain}.bod.unidemo.online"
+resource "okta_trusted_origin" "obakeDemo" {
+  name   = "${var.udp_subdomain}.obake.gambcorp.com"
   origin = "https://${var.udp_subdomain}.obake.gambcorp.com"
   scopes = ["CORS"]
 }
 data "template_file" "obakeConfiguration" {
   template = "${file("${path.module}/obake.dotenv.template")}"
   vars = {
-    client_id         = "${okta_app_oauth.mlmDemoApp.client_id}"
-    auth_server_id    = "${okta_auth_server.bodUnidemo.id}"
+    client_id         = "${okta_app_oauth.obakeDemoApp.client_id}"
+    auth_server_id    = "${okta_auth_server.obakeDemo.id}"
     domain            = "${var.org_name}.${var.base_url}"
-    mfa_group_id = "${okta_group.prospect.id}"
+    mfa_group_id = "${okta_group.obake_mfa.id}"
   }
 }
 resource "local_file" "obakeDotenv" {
