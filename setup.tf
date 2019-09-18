@@ -58,7 +58,7 @@ resource "okta_auth_server_policy_rule" "obakeDefaultRule" {
   priority             = 1
   group_whitelist      = ["${okta_group.all.id}"]
   grant_type_whitelist = ["implicit"]
-  scope_whitelist      = ["customer", "openid", "profile", "email"]
+  scope_whitelist      = ["openid", "profile", "email"]
 }
 resource "okta_user_schema" "addProfilePictureUriAttribute" {
   index  = "profilePictureUrl"
