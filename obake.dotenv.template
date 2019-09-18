@@ -1,0 +1,3 @@
+client_id=${client_id}
+issuer=https://${domain}.com/oauth2/${auth_server_id}
+setting.mfa_group_id=${mfa_group_id}
