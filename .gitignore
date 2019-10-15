@@ -10,3 +10,5 @@ DemoLauncher/Pages/Demos
 DemoLauncher/Properties/launchSettings.json
 .vs
 DemoLauncher/DeployNotes.txt
+ObakeUDPTest/bin/Release/netcoreapp2.2/ChromeDriver/chromedriver
+ObakeUDPTest/ChromeDriver

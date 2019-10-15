@@ -1,0 +1,13 @@
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.dll
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.pdb
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/nunit.engine.dll
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/nunit.engine.api.dll
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/ChromeDriver/chromedriver
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/ObakeUDPTest.deps.json
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/ObakeUDPTest.dll
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/bin/Debug/netcoreapp2.2/ObakeUDPTest.pdb
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/obj/Debug/netcoreapp2.2/ObakeUDPTest.csproj.CoreCompileInputs.cache
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/obj/Debug/netcoreapp2.2/ObakeUDPTest.AssemblyInfoInputs.cache
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/obj/Debug/netcoreapp2.2/ObakeUDPTest.AssemblyInfo.cs
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/obj/Debug/netcoreapp2.2/ObakeUDPTest.dll
+/Users/nickgamb/Projects/ObakeUDPTest/ObakeUDPTest/obj/Debug/netcoreapp2.2/ObakeUDPTest.pdb
