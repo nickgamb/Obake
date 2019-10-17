@@ -16,53 +16,59 @@ from selenium.webdriver.common.proxy import Proxy, ProxyType
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait as wait
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('tests.obake_test')
 SCREENSHOTS_DIR = 'screenshots'
 
-def set_field_value(driver, field_xpath, field_value):
-    field = driver.find_element_by_xpath(field_name)
+def set_field_value(driver, field_name, field_value):
+    field = driver.find_element_by_id(field_name)
     field.click()
     field.send_keys(field_value)
 
-
 # All Users 
+# Needs setup beyond terraform to set the user passwords
 @parameterized_class(
     ('email', 'firstName', 'lastName'), [
-        ("perf1.test@gambcorp.com", "Perf1", "Test"),
-        ("perf2.test@gambcorp.com", "Perf2", "Test"),
+        #("perf1.test@gambcorp.com", "Perf1", "Test")#,
+        #("perf2.test@gambcorp.com", "Perf2", "Test"),
         ("perf3.test@gambcorp.com", "Perf3", "Test")
     ]
 )
-class TemplateTest(BaseUdpTest):
+class ObakeTest(BaseUdpTest):
     PWD = 'Tra!nme123#'
     URL = 'https://gambcorp.obake.gambcorp.com/'
 
-    def test_login_user(self):
-        logger.info("test_register_api")
+    def test_register_user(self):
+        logger.info("test_register_user")
         driver = self.driver
         driver.get(self.URL)
-        self.assertIn("Obake Demo", driver.title)
 
         try:
+            wait(driver, 5).until(EC.visibility_of_element_located((By.ID, 'SignInAccountBtn')))
+            self.assertIn("Okta GambCorp Demo", driver.title)
+
             loginPagesMenuButton = driver.find_element_by_xpath("//*[@id='nav-link-login']").click()
             apiPagesMenuButtonButton = driver.find_element_by_xpath("//*[@id='nav-link--pages--api']").click()
             regMenuButtonButton = driver.find_element_by_xpath("//*[@id='nav-submenu--pages--api']/li[2]/a").click()
 
-            set_field_value(driver, "//*[@id='FullNameInput']", self.firstName + ' ' + self.lastName)
-            set_field_value(driver, "//*[@id='EmailInput']", self.email)
-            set_field_value(driver, "//*[@id='PasswordInput']", self.PWD)
+            set_field_value(driver, "FullNameInput", self.firstName + ' ' + self.lastName)
+            set_field_value(driver, "EmailInput", self.email)
+            set_field_value(driver, "PasswordInput", self.PWD)
 
-            regButton = driver.find_element_by_xpath("//*[@id='SignupSubmitButton']").click()
+            super().save_screenshot(__name__, "00", self.email, "pre-submission")
+            regButton = driver.find_element_by_id("SignupSubmitButton").click()
+            wait(driver, 5).until(EC.visibility_of_element_located((By.ID, 'SignupSubmitButton')))
 
-            super().save_screenshot(__name__, "00", self.email, "info")
+            super().save_screenshot(__name__, "01", self.email, "post-submission")
         except TimeoutException as exc:
             logger.error("Timed out: " + __name__, exc_info=True)
-            super().save_screenshot(__name__, "00", self.email, "error")
+            super().save_screenshot(__name__, "01", self.email, "error")
         driver.switch_to.default_content()
     
     def tearDown(self):
         super().tearDown()
         logger.info("tearDown()")
 
+        self.deleteOktaTestUser(self.email)
+
 if __name__ == "__main__":
-    unittest.main()    
+    unittest.main() 
