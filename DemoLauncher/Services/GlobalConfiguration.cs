@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DemoLauncher.Services
 {
@@ -17,6 +19,9 @@ namespace DemoLauncher.Services
         //UDP variables that should never change
         public string UDP_BASE_URL { get; set; }
         public string UDP_KEY { get; set; }
+        public string UDP_OKTA_URL { get; set; }
+        public string UDP_OKTA_CLIENT_ID { get; set; }
+        public string UDP_OKTA_CLIENT_SECRET { get; set; }
 
         //UDP variables set depending on host
         public string subdomain { get; set; }
@@ -55,6 +60,9 @@ namespace DemoLauncher.Services
             //Defaults
             UDP_BASE_URL = _configuration["AppSettings:UDP_BaseUrl"];
             UDP_KEY = _configuration["AppSettings:DefaultKey"];
+            UDP_OKTA_URL = _configuration["AppSettings:UDP_Okta_Url"];
+            UDP_OKTA_CLIENT_ID = _configuration["AppSettings:UDP_Okta_Client_Id"];
+            UDP_OKTA_CLIENT_SECRET = _configuration["AppSettings:UDP_Okta_Client_Secret"];
 
             var context = httpContextAccessor.HttpContext;
 
@@ -91,52 +99,78 @@ namespace DemoLauncher.Services
             }
 
             //Pull the config json and put it in AppConfig
-            dynamic AppConfig = new JObject();
             string udpConfigUrl = String.Format("{0}/api/configs/{1}/{2}", UDP_BASE_URL, subdomain, app_name);
+            dynamic AppConfig = GetUDPAppConfig(udpConfigUrl);
 
-            try
+            //Make sure AppConfig is populated and that we were able to reach UDP
+            if (AppConfig != null)
             {
-                using (var client = new HttpClient())
+                //Parse AppConfig into Global Config
+                try
                 {
-                    var response = client.GetAsync(udpConfigUrl).Result;
+                    //Okta Settings
+                    Okta_Org = AppConfig["okta_org_name"];
+                    Okta_ClientId = AppConfig["client_id"];
+                    Okta_Issuer = AppConfig["issuer"];
+                    Okta_RedirectUri = AppConfig["redirect_uri"];
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseContent = response.Content;
-
-                        string responseString = responseContent.ReadAsStringAsync().Result;
-
-                        AppConfig = JObject.Parse(responseString);
-
-                        //Populate config variables with config from UDP
-
-                        //Okta Settings
-                        Okta_Org = AppConfig["okta_org_name"];
-                        Okta_APIToken = AppConfig["settings"]["okta_api_token"];
-                        Okta_ClientId = AppConfig["client_id"];
-                        Okta_Issuer = AppConfig["issuer"];
-                        Okta_RedirectUri = AppConfig["redirect_uri"];
-
-                        //App Settings
-                        DemoLauncher_LogoUri = AppConfig["settings"]["app_logo"]; //The Logo to use through out the demo
-                        DemoLauncher_JumboImageUri = AppConfig["settings"]["jumbo_img_uri"]; //The jumbotron image
-                        DemoLauncher_VideoUri = AppConfig["settings"]["video_uri"]; //The jumbotron video
-                        DemoLauncher_IntroBlurb_Title = AppConfig["settings"]["intro_blurb_title"]; //The jumbotron blurb title
-                        DemoLauncher_IntroBlurb = AppConfig["settings"]["intro_blurb"]; //The jumbotron blurb
-                        DemoLauncher_BodyBlurb1_Title = AppConfig["settings"]["body_blurb1_title"]; //The first body blurb title
-                        DemoLauncher_BodyBlurb1 = AppConfig["settings"]["body_blurb1"]; //The first body blurb
-                        DemoLauncher_BodyBlurb2_Title = AppConfig["settings"]["body_blurb2_title"];//The second body blurb title
-                        DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
-                        DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
-                        DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
-                    }
+                    //App Settings
+                    DemoLauncher_LogoUri = AppConfig["settings"]["app_logo"]; //The Logo to use through out the demo
+                    DemoLauncher_JumboImageUri = AppConfig["settings"]["jumbo_img_uri"]; //The jumbotron image
+                    DemoLauncher_VideoUri = AppConfig["settings"]["video_uri"]; //The jumbotron video
+                    DemoLauncher_IntroBlurb_Title = AppConfig["settings"]["intro_blurb_title"]; //The jumbotron blurb title
+                    DemoLauncher_IntroBlurb = AppConfig["settings"]["intro_blurb"]; //The jumbotron blurb
+                    DemoLauncher_BodyBlurb1_Title = AppConfig["settings"]["body_blurb1_title"]; //The first body blurb title
+                    DemoLauncher_BodyBlurb1 = AppConfig["settings"]["body_blurb1"]; //The first body blurb
+                    DemoLauncher_BodyBlurb2_Title = AppConfig["settings"]["body_blurb2_title"];//The second body blurb title
+                    DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
+                    DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
+                    DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
+                }
+                catch (Exception exception)
+                {
+                    //TODO: Log that we cant cant parse app config
                 }
             }
-            catch (Exception exception)
+            else
             {
-                //TODO: Log that we cant reach UDP
+                //TODO: Log that we could not reach UDP
             }
 
+            //Get Access token for UDP org via OAuth Client Creds
+            string OktaOAuthUrl = String.Format("{0}/oauth2/default/v1/token", UDP_OKTA_URL);
+            dynamic OktaAuth = OktaClientCredentials(OktaOAuthUrl, UDP_OKTA_CLIENT_ID, UDP_OKTA_CLIENT_SECRET);
+
+
+            if (OktaAuth != null)
+            {
+                //Get Okta API Token From protected UDP Subdomain API
+                string udpSubUrl = String.Format("{0}/api/subdomains/{1}", UDP_BASE_URL, subdomain);
+                dynamic SubConfig = GetUDPSubdomainSecret(udpSubUrl, OktaAuth.SelectToken("access_token").ToString());
+
+                if (SubConfig != null)
+                {
+                    //Parse subdomain config to get token
+                    try
+                    {
+                        //Get the Okta API Token
+                        Okta_APIToken = SubConfig["okta_api_token"];
+                    }
+                    catch (Exception)
+                    {
+                        //TODO: Log error parsing UDP subdomain config
+                    }
+                }
+                else
+                {
+                    //TODO: log error getting sub config
+                }
+            }
+            else
+            {
+                //TODO: Log error getting access token
+            }
+            
             //Use a local config if we couldnt reach UDP or value is null
 
             //Okta Settings
@@ -146,7 +180,7 @@ namespace DemoLauncher.Services
             }
             if (Okta_APIToken == null)
             {
-                Okta_APIToken = _configuration["AppSettings:okta_api_token"];
+                //IF THIS HAPPENS AN ERROR SHOULD HAVE ALREADY BEEN THROWN!
             }
             if (Okta_ClientId == null)
             {
@@ -206,6 +240,109 @@ namespace DemoLauncher.Services
             { 
                 DemoLauncher_BodyBlurb3 = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb
             }
+        }
+        public JObject GetUDPAppConfig(string udpConfigUrl)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(udpConfigUrl).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content;
+
+                        string responseString = responseContent.ReadAsStringAsync().Result;
+
+                        return JObject.Parse(responseString); 
+                    }
+                    else
+                    {
+                        //TODO: Log error 
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                //TODO: Log that we cant reach UDP
+                return null;
+            }
+
+            //TODO: Log unknown state
+            return null;
+        }
+        public JObject GetUDPSubdomainSecret(string udpConfigUrl, string accessToken)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                    var response = client.GetAsync(udpConfigUrl).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content;
+
+                        string responseString = responseContent.ReadAsStringAsync().Result;
+
+                        return JObject.Parse(responseString);
+                    }
+                    else
+                    {
+                        //TODO: Log error 
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //Log that we could nto get secret
+                return null;
+            }
+
+            //TODO: Log unknown state
+            return null;
+        }
+        public JObject OktaClientCredentials(string udpConfigUrl, string clientId, string clientSecret)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var byteArray = Encoding.ASCII.GetBytes(String.Format("{0}:{1}", clientId, clientSecret));
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                    //Prepare Request Body
+                    List<KeyValuePair<string, string>> requestData = new List<KeyValuePair<string, string>>();
+                    requestData.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+                    requestData.Add(new KeyValuePair<string, string>("scope", "secrets:read"));
+                    FormUrlEncodedContent requestBody = new FormUrlEncodedContent(requestData);
+
+                    var response = client.PostAsync(udpConfigUrl, requestBody).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content;
+
+                        string responseString = responseContent.ReadAsStringAsync().Result;
+
+                        return JObject.Parse(responseString);
+                    }
+                    else
+                    {
+                        //TODO: Log error 
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log that we could not get Access Token
+                return null;
+            }
+
+            //TODO: Log unkmnown state
+            return null;
         }
     }
 }
