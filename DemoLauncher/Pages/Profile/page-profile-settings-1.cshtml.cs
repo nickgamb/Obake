@@ -69,18 +69,18 @@ namespace DemoLauncher.Pages
 
             var currentUser = await client.Users.GetUserAsync(oktaProfile.Email);
 
-            oktaProfile.FirstName = TryGetDictValues(currentUser.Profile, "firstName");
-            oktaProfile.LastName = TryGetDictValues(currentUser.Profile, "lastName"); 
+            oktaProfile.FirstName = TryGetProfileValues(currentUser.Profile, "firstName");
+            oktaProfile.LastName = TryGetProfileValues(currentUser.Profile, "lastName"); 
             oktaProfile.FullName = oktaProfile.FirstName + " " + oktaProfile.LastName;
-            oktaProfile.EmployeeNumber = TryGetDictValues(currentUser.Profile, "employeeNumber");
-            oktaProfile.Organization = TryGetDictValues(currentUser.Profile, "organization");
-            oktaProfile.Title = TryGetDictValues(currentUser.Profile, "title");
-            oktaProfile.Email = TryGetDictValues(currentUser.Profile, "email");
-            oktaProfile.ProfileURL = TryGetDictValues(currentUser.Profile, "profileUrl");
-            oktaProfile.MobilePhone = TryGetDictValues(currentUser.Profile, "mobilePhone");
-            oktaProfile.PrimaryPhone = TryGetDictValues(currentUser.Profile, "primaryPhone");
-            oktaProfile.Address = TryGetDictValues(currentUser.Profile, "streetAddress");
-            oktaProfile.ProfilePictureURL = TryGetDictValues(currentUser.Profile, "profilePictureUrl");
+            oktaProfile.EmployeeNumber = TryGetProfileValues(currentUser.Profile, "employeeNumber");
+            oktaProfile.Organization = TryGetProfileValues(currentUser.Profile, "organization");
+            oktaProfile.Title = TryGetProfileValues(currentUser.Profile, "title");
+            oktaProfile.Email = TryGetProfileValues(currentUser.Profile, "email");
+            oktaProfile.ProfileURL = TryGetProfileValues(currentUser.Profile, "profileUrl");
+            oktaProfile.MobilePhone = TryGetProfileValues(currentUser.Profile, "mobilePhone");
+            oktaProfile.PrimaryPhone = TryGetProfileValues(currentUser.Profile, "primaryPhone");
+            oktaProfile.Address = TryGetProfileValues(currentUser.Profile, "streetAddress");
+            oktaProfile.ProfilePictureURL = TryGetProfileValues(currentUser.Profile, "profilePictureUrl");
 
             //If there is no profile picture url in the Okta Profile, set to default image
             if (oktaProfile.ProfilePictureURL == "")
@@ -136,6 +136,7 @@ namespace DemoLauncher.Pages
             currentUser.Profile["mobilePhone"] = oktaProfile.MobilePhone;
             currentUser.Profile["primaryPhone"] = oktaProfile.PrimaryPhone;
             currentUser.Profile["streetAddress"] = oktaProfile.Address;
+            currentUser.Profile["profilePictureUrl"] = oktaProfile.ProfilePictureURL; //TODO: This needs to be done via UDP file upload in V2
 
             var updateResult = await currentUser.UpdateAsync();
 
@@ -205,16 +206,18 @@ namespace DemoLauncher.Pages
         }
 
         //Util to get profile values gracefully
-        public string TryGetDictValues(dynamic dict, string key)
+        public string TryGetProfileValues(dynamic profile, string key)
         {
-            if (dict.ContainsKey(key))
+            try
             {
-                return dict[key].ToString();
+                string value = profile[key].ToString();
+                return value;
             }
-            else
+            catch (Exception)
             {
                 return "";
             }
+
         }
     }
 }

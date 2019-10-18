@@ -305,7 +305,7 @@
                                         <!-- Company Name -->
                                         <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                                             <div class="g-pr-10">
-                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Company name</strong>
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Company Name</strong>
                                                 <input id="spanOrganization" class="align-top" asp-for="oktaProfile.Organization" disabled></>
                                             </div>
                                         </li>
@@ -321,7 +321,7 @@
                                         <!-- Primary Email Address -->
                                         <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                                             <div class="g-pr-10">
-                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Primary email address</strong>
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Primary Email Address</strong>
                                                 <input id="spanEmail" class="align-top" asp-for="oktaProfile.Email" disabled></>
                                             </div>
                                         </li>
@@ -337,7 +337,7 @@
                                         <!-- Phone Number -->
                                         <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                                             <div class="g-pr-10">
-                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Mobile number</strong>
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Mobile Number</strong>
                                                 <input id="spanMobilePhone" class="align-top" asp-for="oktaProfile.MobilePhone" disabled></>
                                             </div>
                                         </li>
@@ -345,7 +345,7 @@
                                         <!-- Office Number -->
                                         <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                                             <div class="g-pr-10">
-                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Office number</strong>
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Office Number</strong>
                                                 <input id="spanPrimaryPhone" class="align-top" asp-for="oktaProfile.PrimaryPhone" disabled></>
                                             </div>
                                         </li>
@@ -358,6 +358,14 @@
                                             </div>
                                         </li>
                                         <!-- End Address -->
+                                        <!-- Profile Picture -->
+                                        <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
+                                            <div class="g-pr-10">
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Profile Picture Url</strong>
+                                                <input id="spanProfilePictureUrl" class="align-top" asp-for="oktaProfile.ProfilePictureURL" disabled></>
+                                            </div>
+                                        </li>
+                                        <!-- End Profile Picture -->
                                     </ul>
 
                                     <div class="text-sm-right">
@@ -763,6 +771,7 @@
                 $("#spanMobilePhone").attr('disabled', false);
                 $("#spanPrimaryPhone").attr('disabled', false);
                 $("#spanAddress").attr('disabled', false);
+                $("#spanProfilePictureUrl").attr('disabled', false);
             });
         });
 
