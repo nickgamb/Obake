@@ -241,6 +241,8 @@ namespace DemoLauncher.Services
                 DemoLauncher_BodyBlurb3 = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb
             }
         }
+
+        //Get UDP App Config
         public JObject GetUDPAppConfig(string udpConfigUrl)
         {
             try
@@ -272,6 +274,8 @@ namespace DemoLauncher.Services
             //TODO: Log unknown state
             return null;
         }
+
+        //Get UDP subdomain config
         public JObject GetUDPSubdomainSecret(string udpConfigUrl, string accessToken)
         {
             try
@@ -304,6 +308,8 @@ namespace DemoLauncher.Services
             //TODO: Log unknown state
             return null;
         }
+
+        //Get access token from Okta via client creds grant
         public JObject OktaClientCredentials(string udpConfigUrl, string clientId, string clientSecret)
         {
             try

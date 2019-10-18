@@ -69,29 +69,25 @@ namespace DemoLauncher.Pages
 
             var currentUser = await client.Users.GetUserAsync(oktaProfile.Email);
 
-            //TODO: Do Error handling for missing profile bits
-            oktaProfile.FirstName = currentUser.Profile["firstName"].ToString();
-            oktaProfile.LastName = currentUser.Profile["lastName"].ToString();
+            oktaProfile.FirstName = TryGetDictValues(currentUser.Profile, "firstName");
+            oktaProfile.LastName = TryGetDictValues(currentUser.Profile, "lastName"); 
             oktaProfile.FullName = oktaProfile.FirstName + " " + oktaProfile.LastName;
-            oktaProfile.EmployeeNumber = currentUser.Profile["employeeNumber"].ToString();
-            oktaProfile.Organization = currentUser.Profile["organization"].ToString();
-            oktaProfile.Title = currentUser.Profile["title"].ToString();
-            oktaProfile.Email = currentUser.Profile["email"].ToString();
-            oktaProfile.ProfileURL = currentUser.Profile["profileUrl"].ToString();
-            oktaProfile.MobilePhone = currentUser.Profile["mobilePhone"].ToString();
-            oktaProfile.PrimaryPhone = currentUser.Profile["primaryPhone"].ToString();
-            oktaProfile.Address = currentUser.Profile["streetAddress"].ToString();
+            oktaProfile.EmployeeNumber = TryGetDictValues(currentUser.Profile, "employeeNumber");
+            oktaProfile.Organization = TryGetDictValues(currentUser.Profile, "organization");
+            oktaProfile.Title = TryGetDictValues(currentUser.Profile, "title");
+            oktaProfile.Email = TryGetDictValues(currentUser.Profile, "email");
+            oktaProfile.ProfileURL = TryGetDictValues(currentUser.Profile, "profileUrl");
+            oktaProfile.MobilePhone = TryGetDictValues(currentUser.Profile, "mobilePhone");
+            oktaProfile.PrimaryPhone = TryGetDictValues(currentUser.Profile, "primaryPhone");
+            oktaProfile.Address = TryGetDictValues(currentUser.Profile, "streetAddress");
+            oktaProfile.ProfilePictureURL = TryGetDictValues(currentUser.Profile, "profilePictureUrl");
 
-            //See if there is a profile url in Okta
-            try
-            {
-                oktaProfile.ProfilePictureURL = currentUser.Profile["profilePictureUrl"].ToString();
-            }
-            //Use a placeholder if no image is in Okta
-            catch (Exception ex)
+            //If there is no profile picture url in the Okta Profile, set to default image
+            if (oktaProfile.ProfilePictureURL == "")
             {
                 oktaProfile.ProfilePictureURL = "../../assets/img-temp/400x450/img1.jpg";
             }
+            
 
             //This is how we can get everything from the oauth tokens. This solution presents issues with stagnant data. Leaving here for posterity
             /*
@@ -117,6 +113,7 @@ namespace DemoLauncher.Pages
             return Page();
         }
 
+        //Save profile changes to Okta
         public async Task<ActionResult> OnPostSave()
         {
             var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
@@ -157,6 +154,7 @@ namespace DemoLauncher.Pages
             return Redirect("page-profile-settings-1");
         }
 
+        //Save new password to Okta
         public async Task<ActionResult> OnPostSetPassword()
         {
             if (oktaChangePasswordProfile.NewPassword == oktaChangePasswordProfile.VerifyPassword)
@@ -191,6 +189,7 @@ namespace DemoLauncher.Pages
             return Redirect("page-profile-settings-1");
         }
 
+        //Get username from ID Token
         private string GetUserName()
         {
             //TODO: We need some error handling here checking if idtoken is not present. 
@@ -203,6 +202,19 @@ namespace DemoLauncher.Pages
             string userName = tokenS.Claims.First(claim => claim.Type == "preferred_username").Value;
 
             return userName;
+        }
+
+        //Util to get profile values gracefully
+        public string TryGetDictValues(dynamic dict, string key)
+        {
+            if (dict.ContainsKey(key))
+            {
+                return dict[key].ToString();
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
