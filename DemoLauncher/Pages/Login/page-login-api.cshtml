@@ -35,7 +35,7 @@
 
                             <form class="g-py-15">
                                 <div class="mb-4" form="submitForm" style="@(Model.bShowUsername ? "display:block" : "display:none")">
-                                    <input asp-for="UserName" form="submitForm" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
+                                    <input asp-for="UserName" id= "userNameText" onkeyup="UserKeyUp()" form="submitForm" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
                                 </div>
                                 <div class="form-group" form="submitForm" style="@(Model.bShowFactors ? "display:block" : "display:none")">
                                     <label asp-for="SelectedFactor" class="control-label" form="submitForm">Factor</label>
@@ -46,7 +46,7 @@
                                 </div>
 
                                 <div class="g-mb-30" id="VerifyTextBox" style="@(Model.bShowVerify ? "display:block" : "display:none")">
-                                    <input asp-for="Verify" form="submitForm" autocomplete="new-password" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="Password" placeholder="Code">
+                                    <input asp-for="Verify" id="verifyText" onkeyup="CodeKeyUp()" form="submitForm" autocomplete="new-password" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="Password" placeholder="Code">
 
                                 </div>
 
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="text-center mb-5">
-                                    <button asp-page-handler="Login" id="loginSubmitButton" form="submitForm" class="btn btn-block u-btn-primary rounded g-py-13">Sign In</button>
+                                    <button asp-page-handler="Login" id="loginSubmitButton" disabled form="submitForm" class="btn btn-block u-btn-primary rounded g-py-13">Sign In</button>
                                 </div>
 
                                 <div class="d-flex justify-content-center text-center g-mb-30">
@@ -110,7 +110,6 @@ $(document).on('ready', function () {
             $.HSCore.components.HSGoTo.init('.js-go-to');
 
             $('#SelectedFactor').change(function () {
-                //TODO: when "select" is set by defualt, submit button is enabled and will trigger an error.
                 //disable submit and clear selected factor hidden input by default
                 $('#loginSubmitButton').prop("disabled", true);
                 document.getElementById('selectedFactorId').value = "";
@@ -129,8 +128,6 @@ $(document).on('ready', function () {
 
                     $('#SendCodeButton').hide();
                     $("#SendCodeButton").css("display", "none");
-
-                    $('#loginSubmitButton').prop("disabled", false);
                 }
                 //This should be code submit factors that require a button to send a code.
                 else if (ddlValue[1] == "sms" || ddlValue[1] == "call" || ddlValue[1] == "email") {
@@ -142,7 +139,6 @@ $(document).on('ready', function () {
                 //This should be password, OTP generators, secret question, hardware tokens, etc. Anything that needs a code entered but no button to send one.
                 else {
                     $('#VerifyTextBox').show();
-                    $('#loginSubmitButton').prop("disabled", false);
                 }
             });
         });
@@ -189,8 +185,24 @@ $(document).on('ready', function () {
             request.setRequestHeader("Content-Type", "application/json");
             request.send('{"stateToken": "' + stateToken + '"}');
 
-            //Enable the submit button once a code is sent.
-            document.getElementById("loginSubmitButton").disabled = false;
+            //Disable Send code button after code is sent.
+            document.getElementById("SendCodeButton").disabled = true;
+        }
+
+        function UserKeyUp() {
+            if (document.getElementById("userNameText").value === "") { 
+                document.getElementById('loginSubmitButton').disabled = true; 
+            } else { 
+                document.getElementById('loginSubmitButton').disabled = false;
+            }   
+        }
+
+        function CodeKeyUp() {
+            if (document.getElementById("verifyText").value === "") { 
+                document.getElementById('loginSubmitButton').disabled = true; 
+            } else { 
+                document.getElementById('loginSubmitButton').disabled = false;
+            }   
         }
 
         function getCookie(cname) {
