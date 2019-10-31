@@ -38,6 +38,7 @@ This application will help you demonstrate:
 2. Configure a new API token in your Okta org and note the token value
 3. Configure an MFA Policy if desired
 4. Edit the base Okta user profile and add a new string attribute called profilePictureUrl. Make sure to populate it for your users with a url to a profile picture
+5. If you want to use self service reg in the widget, you need to enable the beta flag for your org and configure self service in the admin UI. This goes for UDP versions as well! Go to Directory > Self-Service Registration, enable the feature, and customize to your environment and preferances. The redirect URL needs to be set to your Obake environment URL (i.e. domain.obake.gambcorp.com)
 
 ## 1. Build the application
 
