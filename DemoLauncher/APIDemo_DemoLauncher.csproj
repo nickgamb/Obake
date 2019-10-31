@@ -76,7 +76,6 @@
     <Folder Include="Pages\Demos\one-pages\" />
     <Folder Include="Pages\Demos\Education\" />
     <Folder Include="wwwroot\assets\img-temp\Customers\" />
-    <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>

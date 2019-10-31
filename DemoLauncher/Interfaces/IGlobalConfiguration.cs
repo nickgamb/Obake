@@ -6,6 +6,10 @@ namespace DemoLauncher.Interfaces
         //UDP variables that should never change
         string UDP_BASE_URL { get; set; }
         string UDP_KEY { get; set; }
+        string UDP_OKTA_URL { get; set; }
+        string UDP_OKTA_CLIENT_ID { get; set; }
+        string UDP_OKTA_CLIENT_SECRET { get; set; }
+
 
         //UDP variables set depending on host
         string subdomain { get; set; }
@@ -13,7 +17,6 @@ namespace DemoLauncher.Interfaces
 
         //App config variables. Specific to Okta
         string Okta_Org { get; set; } //base Okta Org Uri
-        string Okta_APIToken { get; set; } //Okta API Token used for admin functions
         string Okta_ClientId { get; set; } //Okta OIDC Client ID
         string Okta_Issuer { get; set; } //Okta OIDC Issuer
         string Okta_RedirectUri { get; set; } //Used for OIDC redirect when converting session token to oauth token

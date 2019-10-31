@@ -29,7 +29,6 @@ namespace DemoLauncher.Services
 
         //App config variables. Specific to Okta
         public string Okta_Org { get; set; } //base Okta Org Uri
-        public string Okta_APIToken { get; set; } //Okta API Token used for admin functions
         public string Okta_ClientId { get; set; } //Okta OIDC Client ID
         public string Okta_Issuer { get; set; } //Okta OIDC Issuer
         public string Okta_RedirectUri { get; set; } //Used for OIDC redirect when converting session token to oauth token
@@ -136,40 +135,6 @@ namespace DemoLauncher.Services
             {
                 //TODO: Log that we could not reach UDP
             }
-
-            //Get Access token for UDP org via OAuth Client Creds
-            string OktaOAuthUrl = String.Format("{0}/oauth2/default/v1/token", UDP_OKTA_URL);
-            dynamic OktaAuth = OktaClientCredentials(OktaOAuthUrl, UDP_OKTA_CLIENT_ID, UDP_OKTA_CLIENT_SECRET);
-
-
-            if (OktaAuth != null)
-            {
-                //Get Okta API Token From protected UDP Subdomain API
-                string udpSubUrl = String.Format("{0}/api/subdomains/{1}", UDP_BASE_URL, subdomain);
-                dynamic SubConfig = GetUDPSubdomainSecret(udpSubUrl, OktaAuth.SelectToken("access_token").ToString());
-
-                if (SubConfig != null)
-                {
-                    //Parse subdomain config to get token
-                    try
-                    {
-                        //Get the Okta API Token
-                        Okta_APIToken = SubConfig["okta_api_token"];
-                    }
-                    catch (Exception)
-                    {
-                        //TODO: Log error parsing UDP subdomain config
-                    }
-                }
-                else
-                {
-                    //TODO: log error getting sub config
-                }
-            }
-            else
-            {
-                //TODO: Log error getting access token
-            }
             
             //Use a local config if we couldnt reach UDP or value is null
 
@@ -177,10 +142,6 @@ namespace DemoLauncher.Services
             if (Okta_Org == null)
             {
                 Okta_Org = _configuration["AppSettings:okta_org_name"];
-            }
-            if (Okta_APIToken == null)
-            {
-                //IF THIS HAPPENS AN ERROR SHOULD HAVE ALREADY BEEN THROWN!
             }
             if (Okta_ClientId == null)
             {
@@ -272,82 +233,6 @@ namespace DemoLauncher.Services
             }
 
             //TODO: Log unknown state
-            return null;
-        }
-
-        //Get UDP subdomain config
-        public JObject GetUDPSubdomainSecret(string udpConfigUrl, string accessToken)
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-                    var response = client.GetAsync(udpConfigUrl).Result;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseContent = response.Content;
-
-                        string responseString = responseContent.ReadAsStringAsync().Result;
-
-                        return JObject.Parse(responseString);
-                    }
-                    else
-                    {
-                        //TODO: Log error 
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //Log that we could nto get secret
-                return null;
-            }
-
-            //TODO: Log unknown state
-            return null;
-        }
-
-        //Get access token from Okta via client creds grant
-        public JObject OktaClientCredentials(string udpConfigUrl, string clientId, string clientSecret)
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var byteArray = Encoding.ASCII.GetBytes(String.Format("{0}:{1}", clientId, clientSecret));
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
-                    //Prepare Request Body
-                    List<KeyValuePair<string, string>> requestData = new List<KeyValuePair<string, string>>();
-                    requestData.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
-                    requestData.Add(new KeyValuePair<string, string>("scope", "secrets:read"));
-                    FormUrlEncodedContent requestBody = new FormUrlEncodedContent(requestData);
-
-                    var response = client.PostAsync(udpConfigUrl, requestBody).Result;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseContent = response.Content;
-
-                        string responseString = responseContent.ReadAsStringAsync().Result;
-
-                        return JObject.Parse(responseString);
-                    }
-                    else
-                    {
-                        //TODO: Log error 
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //TODO: Log that we could not get Access Token
-                return null;
-            }
-
-            //TODO: Log unkmnown state
             return null;
         }
     }

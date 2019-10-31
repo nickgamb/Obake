@@ -22,6 +22,7 @@ namespace DemoLauncher.Pages
 
         //Global Config
         private readonly IGlobalConfiguration _globalConfiguration;
+        ObakeHelpers helpers;
 
         /**********************
          * Getters and Setters*
@@ -42,6 +43,7 @@ namespace DemoLauncher.Pages
         public PageSignupApiModel(IGlobalConfiguration globalConfiguration)
         {
             _globalConfiguration = globalConfiguration;
+            helpers = new ObakeHelpers(_globalConfiguration);
         }
 
         /************************
@@ -64,7 +66,7 @@ namespace DemoLauncher.Pages
             var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
             {
                 OktaDomain = _globalConfiguration.Okta_Org,
-                Token = _globalConfiguration.Okta_APIToken
+                Token = helpers.GetOktaAPIToken()
             });
 
             string[] fullName = FullNameInput.Split(" ");
