@@ -69,7 +69,7 @@ resource "okta_user_schema" "addProfilePictureUriAttribute" {
 resource "okta_trusted_origin" "obakeDemo" {
   name   = "${var.udp_subdomain}.obake.gambcorp.com"
   origin = "https://${var.udp_subdomain}.obake.gambcorp.com"
-  scopes = ["CORS"]
+  scopes = ["CORS", "REDIRECT"]
 }
 data "template_file" "obakeConfiguration" {
   template = "${file("${path.module}/obake.dotenv.template")}"
