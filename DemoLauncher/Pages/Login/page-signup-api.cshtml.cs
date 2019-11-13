@@ -71,6 +71,14 @@ namespace DemoLauncher.Pages
 
             string[] fullName = FullNameInput.Split(" ");
 
+            string firstName = fullName[0];
+            string lastName = "";
+
+            if (fullName.Length > 0)
+            {
+                lastName = fullName[1];
+            }
+
             // Create a user with the specified password
             //TODO: Add capcha to protect from spam. Add more profile bits like phone for mfa.
             var createUserResponse = client.Users.CreateUserAsync(new CreateUserWithPasswordOptions
@@ -78,8 +86,8 @@ namespace DemoLauncher.Pages
                 // User profile object
                 Profile = new UserProfile
                 {
-                    FirstName = fullName[0],
-                    LastName = fullName[1],
+                    FirstName = firstName,
+                    LastName = lastName,
                     Email = EmailInput,
                     Login = EmailInput
                 },

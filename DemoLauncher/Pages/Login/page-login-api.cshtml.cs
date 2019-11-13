@@ -27,6 +27,7 @@ namespace DemoLauncher.Pages
          **********************/
 
         //input fields from page
+        [BindProperty]
         public string UserName { get; set; }
         public string Password { get; set; }
 
@@ -73,7 +74,6 @@ namespace DemoLauncher.Pages
         }
         public void OnPost()
         {
-            //Dont Do Shit By Default You stupid platform!
         }
 
         /************************
@@ -83,67 +83,92 @@ namespace DemoLauncher.Pages
         //Login button post action
         public ActionResult OnPostLogin()
         {
-            //Store our auth result response
-            AuthenticationResponse authResponse = null;
-
-            //Do a submit and then check if continued polling is required. 
-            do
+            try
             {
-                authResponse = SubmitChallenge();
-            }
-            while (authResponse.AuthenticationStatus == "MFA_CHALLENGE");
+                //Store our auth result response
+                AuthenticationResponse authResponse = null;
 
-            //Handle all result auth states
-            switch (authResponse.AuthenticationStatus)
+                //Do a submit and then check if continued polling is required. 
+                do
+                {
+                    authResponse = SubmitChallenge();
+                    string test = "";
+                }
+                while (authResponse.AuthenticationStatus == "MFA_CHALLENGE");
+
+                //Handle all result auth states
+                switch (authResponse.AuthenticationStatus)
+                {
+                    //Auth process started. Present factors
+                    case "UNAUTHENTICATED":
+                        PopulateFactors(authResponse.Embedded.GetProperty<dynamic>("factors"));//Send factor list to populate dropdown
+                        SetStateToken(authResponse.StateToken);
+                        return Page();
+                    case "PASSWORD_WARN":
+                        //TODO: Warn the user if their password is close to expiration 
+                        //Getting close to expire, ask user to reset
+                        return Page();
+                    case "PASSWORD_EXPIRED":
+                        //TODO: Support expired passwords
+                        //Password is expired, force change password
+                        return Page();
+                    case "RECOVERY":
+                        //TODO: Support account recovery
+                        //Ask user password recovery question
+                        return Page();
+                    case "RECOVERY_CHALLENGE":
+                        //Submit answer to recovery question
+                        return Page();
+                    case "PASSWORD_RESET":
+                        //TODO: Support passowrd reset
+                        //Submit new password
+                        return Page();
+                    case "LOCKED_OUT":
+                        //TODO: Support locked out accounts
+                        //Show error or support self service reecovery
+                        return Page();
+                    case "MFA_ENROLL":
+                        //TODO: Support Enrollment of new factos
+                        //Tell user tht they need to enroll the mfa factor
+                        return Page();
+                    case "MFA_ENROLL_ACTIVATE":
+                        //Ask user to complete activation challenge for factor
+                        return Page();
+                    case "MFA_REQUIRED":
+                        PopulateFactors(authResponse.Embedded.GetProperty<dynamic>("factors")); //Send factor list to populate dropdown
+                        SetStateToken(authResponse.StateToken);
+                        return Page();
+                    case "MFA_CHALLENGE":
+                        //This state is handled above in the do/while. We should not get here
+                        break;
+                    case "SUCCESS":
+                        string url = String.Format("{0}/oauth2/default/v1/authorize?client_id={1}&response_type=id_token%20token&scope=openid%20profile&prompt=none&redirect_uri={2}&state=Af0ifjslDkj&nonce=n-0S6_WzA2Mj&sessionToken={3}", _globalConfiguration.Okta_Org, _globalConfiguration.Okta_ClientId, _globalConfiguration.Okta_RedirectUri, authResponse.SessionToken);
+                        DeleteStateToken();
+                        return Redirect(url);
+                }
+            }
+            catch (Exception ex)
             {
-                //Auth process started. Present factors
-                case "UNAUTHENTICATED":
-                    PopulateFactors(authResponse.Embedded.GetProperty<dynamic>("factors"));//Send factor list to populate dropdown
-                    SetStateToken(authResponse.StateToken);
-                    return Page();
-                case "PASSWORD_WARN":
-                    //TODO: Warn the user if their password is close to expiration 
-                    //Getting close to expire, ask user to reset
-                    return Page();
-                case "PASSWORD_EXPIRED":
-                    //TODO: Support expired passwords
-                    //Password is expired, force change password
-                    return Page();
-                case "RECOVERY":
-                    //TODO: Support account recovery
-                    //Ask user password recovery question
-                    return Page();
-                case "RECOVERY_CHALLENGE":
-                    //Submit answer to recovery question
-                    return Page();
-                case "PASSWORD_RESET":
-                    //TODO: Support passowrd reset
-                    //Submit new password
-                    return Page();
-                case "LOCKED_OUT":
-                    //TODO: Support locked out accounts
-                    //Show error or support self service reecovery
-                    return Page();
-                case "MFA_ENROLL":
-                    //TODO: Support Enrollment of new factos
-                    //Tell user tht they need to enroll the mfa factor
-                    return Page();
-                case "MFA_ENROLL_ACTIVATE":
-                    //Ask user to complete activation challenge for factor
-                    return Page();
-                case "MFA_REQUIRED":
-                    PopulateFactors(authResponse.Embedded.GetProperty<dynamic>("factors")); //Send factor list to populate dropdown
-                    SetStateToken(authResponse.StateToken);
-                    return Page();
-                case "MFA_CHALLENGE":
-                    //This state is handled above in the do/while. We should not get here
-                    break;
-                case "SUCCESS":
-                    string url = String.Format("{0}/oauth2/default/v1/authorize?client_id={1}&response_type=id_token%20token&scope=openid%20profile&prompt=none&redirect_uri={2}&state=Af0ifjslDkj&nonce=n-0S6_WzA2Mj&sessionToken={3}", _globalConfiguration.Okta_Org, _globalConfiguration.Okta_ClientId, _globalConfiguration.Okta_RedirectUri, authResponse.SessionToken);
-                    DeleteStateToken();
-                    return Redirect(url);
-            }
+                //check if this happened because factor sequencing is disabled. 
+                if (ex.InnerException.Message == "Api validation failed: authRequest (400, E0000001): The 'username' and 'password' attributes are required in this context.")
+                {
+                    List<dynamic> basicPasswordFactorList = new List<dynamic>()
+                    {
+                        new Dictionary<string,object>()
+                            {
+                                {"id","manualGenPass"},
+                                {"factorType","password"}
+                            }
+                    };
 
+                    PopulateFactors(basicPasswordFactorList); //Send factor list to populate dropdown
+
+                    UserName = Request.Form[nameof(UserName)].ToString();
+
+                }
+
+                //TODO: Do more error checking here
+            }
             return Page();
         }
 
@@ -272,10 +297,17 @@ namespace DemoLauncher.Pages
             if (!HttpContext.Session.TryGetValue("StateToken", out sessionName))
             {
                 payload.username = Request.Form[nameof(UserName)].ToString();
+
                 payload.Add(new JProperty("options", new JObject()));
 
-                payload.options.warnBeforePasswordExpired = true;
-                payload.options.multiOptionalFactorEnroll = true;
+                payload.options.warnBeforePasswordExpired = false;
+                payload.options.multiOptionalFactorEnroll = false;
+
+                //This can only happen if factor squencing is disabled and password is selected before first submit to okta
+                if (selectedFactorArr[1] == "password")
+                {
+                    payload.password = Request.Form[nameof(Verify)].ToString();
+                }
 
                 submitUri = "/api/v1/authn";
             }
