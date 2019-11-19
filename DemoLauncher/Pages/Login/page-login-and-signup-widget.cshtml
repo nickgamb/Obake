@@ -80,6 +80,7 @@ $(document).on('ready', function () {
             authParams: {
                 issuer: '@Model.issuer',
                 responseType: ['token', 'id_token'],
+                scopes: ['openid', 'profile'],
                 display: 'page'
             }
         });

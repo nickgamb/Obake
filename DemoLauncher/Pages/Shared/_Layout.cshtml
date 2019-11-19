@@ -414,6 +414,7 @@ $(document).on('ready', function () {
             authParams: {
                 issuer: '@issuer',
                 responseType: ['token', 'id_token'],
+                scopes: ['openid', 'profile'],
                 display: 'page'
             }
         });
