@@ -8,6 +8,7 @@
     string redirectUri = _globalConfiguration.Okta_RedirectUri;
     string logo = _globalConfiguration.DemoLauncher_LogoUri;
     string issuer = _globalConfiguration.Okta_Issuer;
+    string enableFactorSequencing = _globalConfiguration.Okta_Enable_FactorSequencing;
 }
 
 
@@ -409,7 +410,8 @@ $(document).on('ready', function () {
             clientId: '@clientId',
             redirectUri: '@redirectUri',
             features: {
-                registration: true
+                registration: true,
+                passwordlessAuth: @enableFactorSequencing
             },
             authParams: {
                 issuer: '@issuer',

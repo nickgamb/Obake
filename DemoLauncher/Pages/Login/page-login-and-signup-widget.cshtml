@@ -75,7 +75,8 @@ $(document).on('ready', function () {
             redirectUri: '@Model.redirectUri',
             logo: '@Model.logo',
             features: {
-                registration: true
+                registration: true,
+                passwordlessAuth: @Model.enableFactorSequencing
             },
             authParams: {
                 issuer: '@Model.issuer',

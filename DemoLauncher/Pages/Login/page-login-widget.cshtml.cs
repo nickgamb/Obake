@@ -32,6 +32,8 @@ namespace DemoLauncher.Pages
         //okta issuer
         [BindProperty]
         public string issuer { get; set; }
+        [BindProperty]
+        public string enableFactorSequencing { get; set; }
 
         /*********************************
         * Class setup and global config *
@@ -50,6 +52,7 @@ namespace DemoLauncher.Pages
             redirectUri = _globalConfiguration.Okta_RedirectUri;
             logo = _globalConfiguration.DemoLauncher_LogoUri;
             issuer = _globalConfiguration.Okta_Issuer;
+            enableFactorSequencing = _globalConfiguration.Okta_Enable_FactorSequencing;
         }
     }
 }

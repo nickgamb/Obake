@@ -74,6 +74,9 @@ $(document).on('ready', function () {
             clientId: '@Model.clientId',
             redirectUri: '@Model.redirectUri',
             logo: '@Model.logo',
+            features: {
+                passwordlessAuth: @Model.enableFactorSequencing
+            },
             authParams: {
                 issuer: '@Model.issuer',
                 responseType: ['token', 'id_token'],

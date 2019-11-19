@@ -20,6 +20,7 @@ namespace DemoLauncher.Interfaces
         string Okta_ClientId { get; set; } //Okta OIDC Client ID
         string Okta_Issuer { get; set; } //Okta OIDC Issuer
         string Okta_RedirectUri { get; set; } //Used for OIDC redirect when converting session token to oauth token
+        string Okta_Enable_FactorSequencing { get; set; } //Enable/Disable Factor sequencing
 
         //App Config variables. Specific to the demo
         string DemoLauncher_LogoUri { get; set; } //The Logo to use through out the demo

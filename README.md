@@ -39,7 +39,7 @@ This application will help you demonstrate:
 3. Configure an MFA Policy if desired
 4. Edit the base Okta user profile and add a new string attribute called profilePictureUrl. Make sure to populate it for your users with a url to a profile picture
 5. If you want to use self service reg in the widget, you need to enable the beta flag for your org and configure self service in the admin UI. This goes for UDP versions as well! Go to Directory > Self-Service Registration, enable the feature, and customize to your environment and preferances. The redirect URL needs to be set to your Obake environment URL (i.e. domain.obake.gambcorp.com)
-6. Obake prefers Factor Sequencing to be enabled. It will function without it, but it is recomended to enable Factor Sequencing in your org. 
+6. Obake prefers Factor Sequencing to be enabled. It will function without it, but it is recomended to enable Factor Sequencing in your org. Make sure to set enable_factor_sequencing to true or false in AppSettings.json or in UDP.
 
 ## 1. Build the application
 
@@ -83,7 +83,8 @@ Obake can be configured to run in many ways. However, the first step is to compi
     "body_blurb2_title": "Customer Identity",
     "body_blurb2": "Build secure, seamless experiences for your customers.",
     "body_blurb3_title": "Your technology can do more",
-    "body_blurb3": "With over 6,000+ integrations, there's a good chance we can connect anyone that touches your organization to any technology they want to use. But what really sets us apart is the depth of our integrations. Explore how SAML, automated provisioning, and security analytics can make the apps you already use even better."
+    "body_blurb3": "With over 6,000+ integrations, there's a good chance we can connect anyone that touches your organization to any technology they want to use. But what really sets us apart is the depth of our integrations. Explore how SAML, automated provisioning, and security analytics can make the apps you already use even better.",
+	"enable_factor_sequencing": "false"
   },
   "AllowedHosts": "*"
 }

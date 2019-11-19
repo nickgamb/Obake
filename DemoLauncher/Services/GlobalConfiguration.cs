@@ -32,6 +32,7 @@ namespace DemoLauncher.Services
         public string Okta_ClientId { get; set; } //Okta OIDC Client ID
         public string Okta_Issuer { get; set; } //Okta OIDC Issuer
         public string Okta_RedirectUri { get; set; } //Used for OIDC redirect when converting session token to oauth token
+        public string Okta_Enable_FactorSequencing { get; set; } //Enable/Disable Factor sequencing
 
         //App Config variables. Specific to the demo. App Settings
         public string DemoLauncher_LogoUri { get; set; } //The Logo to use through out the demo
@@ -125,6 +126,7 @@ namespace DemoLauncher.Services
                     DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
                     DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
                     DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
+                    Okta_Enable_FactorSequencing = AppConfig["settings"]["enable_factor_sequencing"];
                 }
                 catch (Exception exception)
                 {
@@ -200,6 +202,10 @@ namespace DemoLauncher.Services
             if(DemoLauncher_BodyBlurb3 == null)
             { 
                 DemoLauncher_BodyBlurb3 = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb
+            }
+            if (Okta_Enable_FactorSequencing == null)
+            {
+                Okta_Enable_FactorSequencing = _configuration["AppSettings:enable_factor_sequencing"];
             }
         }
 
