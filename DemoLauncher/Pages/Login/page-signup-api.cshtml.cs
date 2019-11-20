@@ -30,9 +30,13 @@ namespace DemoLauncher.Pages
 
         //input fields from page
         [BindProperty]
-        public string FullNameInput { get; set; }
+        public string UserNameInput { get; set; }
         [BindProperty]
         public string EmailInput { get; set; }
+        [BindProperty]
+        public string FirstNameInput { get; set; }
+        [BindProperty]
+        public string LastNameInput { get; set; }
         [BindProperty]
         public string PasswordInput { get; set; }
 
@@ -63,40 +67,37 @@ namespace DemoLauncher.Pages
         //TODO: Currently no factor enrollment is supported in API integrations. Use widget demos for now.
         public ActionResult OnPostSignup()
         {
-            var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
+            try
             {
-                OktaDomain = _globalConfiguration.Okta_Org,
-                Token = helpers.GetOktaAPIToken()
-            });
+                var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
+                {
+                    OktaDomain = _globalConfiguration.Okta_Org,
+                    Token = helpers.GetOktaAPIToken()
+                });
 
-            string[] fullName = FullNameInput.Split(" ");
-
-            string firstName = fullName[0];
-            string lastName = "";
-
-            if (fullName.Length > 0)
+                // Create a user with the specified password
+                //TODO: Add capcha to protect from spam. Add more profile bits like phone for mfa.
+                //TODO: Do a check to make sure that the username is unique or there will be a crash
+                var createUserResponse = client.Users.CreateUserAsync(new CreateUserWithPasswordOptions
+                {
+                    // User profile object
+                    Profile = new UserProfile
+                    {
+                        FirstName = FirstNameInput,
+                        LastName = LastNameInput,
+                        Email = EmailInput,
+                        Login = UserNameInput
+                    },
+                    Password = PasswordInput,
+                    Activate = true,
+                }).Result;
+            }
+            catch (Exception)
             {
-                lastName = fullName[1];
+                //TODO: Handle Errors
             }
 
-            // Create a user with the specified password
-            //TODO: Add capcha to protect from spam. Add more profile bits like phone for mfa.
-            var createUserResponse = client.Users.CreateUserAsync(new CreateUserWithPasswordOptions
-            {
-                // User profile object
-                Profile = new UserProfile
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = EmailInput,
-                    Login = EmailInput
-                },
-                Password = PasswordInput,
-                Activate = true,
-            }).Result;
-
             return Redirect("page-login-api");
-
         }
     }
 }

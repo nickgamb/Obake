@@ -25,13 +25,17 @@
                             <!-- Form -->
                             <form method="post" class="g-py-15">
                                 <div class="mb-4">
-                                    <input asp-for="FullNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="John Doe">
+                                    <input asp-for="UserNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="UserName@suffix.com">
                                 </div>
-
                                 <div class="mb-4">
-                                    <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
+                                    <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="email@domain.com">
                                 </div>
-
+                                <div class="mb-4">
+                                    <input asp-for="FirstNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="First Name">
+                                </div>
+                                <div class="mb-4">
+                                    <input asp-for="LastNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Last Name">
+                                </div>
                                 <div class="g-mb-30">
                                     <input asp-for="PasswordInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="tel" placeholder="Password">
                                 </div>

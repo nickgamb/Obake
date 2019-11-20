@@ -149,6 +149,7 @@ namespace DemoLauncher.Pages
             }
             catch (Exception ex)
             {
+                //TODO: This is a vey ugly way of handling factor sequecing. We need to do a check of UDP config and proactivly change the UI depending on if factor sequencing is enabled 
                 //check if this happened because factor sequencing is disabled. 
                 if (ex.InnerException.Message == "Api validation failed: authRequest (400, E0000001): The 'username' and 'password' attributes are required in this context.")
                 {
