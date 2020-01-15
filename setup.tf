@@ -63,7 +63,7 @@ resource "okta_auth_server_policy" "obakeDefaultPolicy" {
   auth_server_id   = "${okta_auth_server.obakeDemo.id}"
 }
 resource "okta_auth_server_claim" "obakeConsentClaim" {
-  name           = "concent"
+  name           = "consent"
   status         = "ACTIVE"
   claim_type     = "RESOURCE"
   value_type     = "EXPRESSION"
