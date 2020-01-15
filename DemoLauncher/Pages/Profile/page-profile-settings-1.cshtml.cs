@@ -87,7 +87,7 @@ namespace DemoLauncher.Pages
             //If there is no profile picture url in the Okta Profile, set to default image
             if (oktaProfile.ProfilePictureURL == "")
             {
-                oktaProfile.ProfilePictureURL = "../../assets/img-temp/400x450/img1.jpg";
+                oktaProfile.ProfilePictureURL = "../../assets/img-temp/400x450/img0.jpg";
             }
             
 

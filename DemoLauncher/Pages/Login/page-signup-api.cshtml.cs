@@ -92,7 +92,7 @@ namespace DemoLauncher.Pages
                     Activate = true,
                 }).Result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //TODO: Handle Errors
             }
