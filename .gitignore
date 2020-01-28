@@ -14,3 +14,15 @@ ObakeUDPTest/bin/Release/netcoreapp2.2/ChromeDriver/chromedriver
 ObakeUDPTest/ChromeDriver
 ObakeUDPTest/Bin
 ObakeUDPTest/Obj
+DemoLauncher/aws-ecs-tools-defaults.json
+DemoLauncher/Properties/PublishProfiles/registry.hub.docker.com_nickgamb.pubxml
+DemoLauncher/Properties/PublishProfiles/registry.hub.docker.com_nickgamb.pubxml.user
+docker-compose.dcproj
+docker-compose.override.yml
+docker-compose.yml
+obj/Docker/CachedComposeConfigFilePaths.cache
+obj/Docker/docker-compose.vs.debug.partial.g.yml
+obj/Docker/docker-compose.vs.release.partial.g.yml
+obj/Docker/DOCKER_REGISTRY.cache
+obj/Docker/MergedDockerCompose.cache
+obj/Docker/TargetOS.cache
