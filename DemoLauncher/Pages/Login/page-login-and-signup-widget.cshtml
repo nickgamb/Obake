@@ -76,7 +76,8 @@ $(document).on('ready', function () {
             logo: '@Model.logo',
             features: {
                 registration: true,
-                passwordlessAuth: @Model.enableFactorSequencing
+                passwordlessAuth: @Model.enableFactorSequencing,
+                webauthn: true
             },
             authParams: {
                 issuer: '@Model.issuer',
@@ -89,9 +90,13 @@ $(document).on('ready', function () {
         //START: Include on every login widget view
         //Get current session state
         oktaSignIn.session.get(function (res) {
-            // Session exists, show logged in state.
+            // Session exists, a user should not be on this page and logged in. Log them out and redirect to try again.
             if (res.status === 'ACTIVE') {
-                return;
+                oktaSignIn.signOut(); //clear okta token store
+                eraseCookie("idToken");
+                eraseCookie("accessToken");
+                console.log('logged out');
+                window.location.reload();
             }
             // No session, show the login form
             oktaSignIn.renderEl(

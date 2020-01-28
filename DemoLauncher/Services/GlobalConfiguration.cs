@@ -46,6 +46,7 @@ namespace DemoLauncher.Services
         public string DemoLauncher_BodyBlurb2 { get; set; } //The second body blurb
         public string DemoLauncher_BodyBlurb3_Title { get; set; } //The third body blurb title
         public string DemoLauncher_BodyBlurb3 { get; set; } //The third body blurb
+        public string GDPR_Consent_Version { get; set; } //The current version of terms
 
         private readonly IConfiguration _configuration;
 
@@ -113,6 +114,7 @@ namespace DemoLauncher.Services
                     Okta_ClientId = AppConfig["client_id"];
                     Okta_Issuer = AppConfig["issuer"];
                     Okta_RedirectUri = AppConfig["redirect_uri"];
+                    //Okta_RedirectUri = "http://localhost:52260";
 
                     //App Settings
                     DemoLauncher_LogoUri = AppConfig["settings"]["app_logo"]; //The Logo to use through out the demo
@@ -127,6 +129,7 @@ namespace DemoLauncher.Services
                     DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
                     DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
                     Okta_Enable_FactorSequencing = AppConfig["settings"]["enable_factor_sequencing"];
+                    GDPR_Consent_Version = AppConfig["settings"]["gdpr_consent_version"]; //The third body blurb
                 }
                 catch (Exception exception)
                 {
@@ -206,6 +209,10 @@ namespace DemoLauncher.Services
             if (Okta_Enable_FactorSequencing == null)
             {
                 Okta_Enable_FactorSequencing = _configuration["AppSettings:enable_factor_sequencing"];
+            }
+            if (GDPR_Consent_Version == null)
+            {
+                GDPR_Consent_Version = _configuration["AppSettings:gdpr_consent_version"];
             }
         }
 
