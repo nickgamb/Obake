@@ -34,5 +34,6 @@ namespace DemoLauncher.Interfaces
         string DemoLauncher_BodyBlurb2 { get; set; } //The second body blurb
         string DemoLauncher_BodyBlurb3_Title { get; set; } //The third body blurb title
         string DemoLauncher_BodyBlurb3 { get; set; } //The third body blurb
+        string GDPR_Consent_Version { get; set; } //The current version of terms and conditions
     }
 }

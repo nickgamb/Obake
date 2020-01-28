@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DemoLauncher.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
+using Okta.Sdk;
+using DemoLauncher.Services;
+using Newtonsoft.Json;
 
 namespace DemoLauncher.Pages
 {
@@ -16,6 +20,7 @@ namespace DemoLauncher.Pages
 
         //Global Config
         private readonly IGlobalConfiguration _globalConfiguration;
+        ObakeHelpers helpers;
 
         [BindProperty]
         public string DemoLauncher_LogoUri { get; set; } //The Logo to use through out the demo
@@ -39,6 +44,10 @@ namespace DemoLauncher.Pages
         public string DemoLauncher_BodyBlurb3_Title { get; set; } //The third body blurb title
         [BindProperty]
         public string DemoLauncher_BodyBlurb3 { get; set; } //The third body blurb
+        [BindProperty]
+        public bool Consent_Required { get; set; } //Is user consent needed
+        [BindProperty]
+        public string Consent_Version { get; set; } //Is user consent needed
 
 
         /*********************************
@@ -48,13 +57,14 @@ namespace DemoLauncher.Pages
         public HomeDefaultModel(IGlobalConfiguration globalConfiguration)
         {
             _globalConfiguration = globalConfiguration;
+            helpers = new ObakeHelpers(_globalConfiguration);
         }
 
         /*************
         * View logic *
         **************/
 
-        public void OnGet()
+        public async Task<ActionResult> OnGet()
         {
             //Set our config variables so that our view can use them
             DemoLauncher_LogoUri = _globalConfiguration.DemoLauncher_LogoUri; //The Logo to use through out the demo
@@ -68,6 +78,107 @@ namespace DemoLauncher.Pages
             DemoLauncher_BodyBlurb2 = _globalConfiguration.DemoLauncher_BodyBlurb2; //The second body blurb
             DemoLauncher_BodyBlurb3_Title = _globalConfiguration.DemoLauncher_BodyBlurb3_Title; //The third body blurb title
             DemoLauncher_BodyBlurb3 = _globalConfiguration.DemoLauncher_BodyBlurb3; //The third body blurb
+            Consent_Version = _globalConfiguration.GDPR_Consent_Version;
+
+            //Check with Okta to see if concent is required
+            Consent_Required = false;
+            string userEmail = GetUserName();
+
+            //User is logged in. Check on consent
+            if (userEmail != "ERROR")
+            {
+                //TODO: Push this out to a function
+                //Create a new okta client to get profile data for the user
+                var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
+                {
+                    OktaDomain = _globalConfiguration.Okta_Org,
+                    Token = helpers.GetOktaAPIToken()
+                });
+
+                var currentUser = await client.Users.GetUserAsync(userEmail);
+
+                //TODO: We need some error handling here 
+                var stream = helpers.TryGetProfileValues(currentUser.Profile, "consent");
+
+                if (stream != "")
+                {
+                    var consentObject = JsonConvert.DeserializeObject<dynamic>(stream);
+
+                    if (consentObject.Version != Consent_Version)
+                    {
+                        Consent_Required = true;
+                    }
+
+                    //If we get here Consent is not needed.
+                }
+                else
+                {
+                    Consent_Required = true;
+                }
+            }
+            else
+            {
+                //TODO: Evaluate error. This happens when a user is logged out or no id token is present in cookies
+            }
+
+            return Page();
+        }
+
+        //Get username from ID Token
+        private string GetUserName()
+        {
+            try
+            {
+                //TODO: We need some error handling here checking if idtoken is not present. 
+                var stream = Request.Cookies["idToken"].ToString(); //broken
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(stream);
+                var tokenS = handler.ReadToken(stream) as JwtSecurityToken;
+
+                //TODO: We need some error handling here checking if preferred_username is in the claim.
+                string userName = tokenS.Claims.First(claim => claim.Type == "preferred_username").Value;
+
+                return userName;
+            }
+            catch (Exception ex)
+            {
+
+                //TODO: Do some error handling
+                return "ERROR";
+            }
+            
+        }
+
+        public async Task<ActionResult> OnPostSaveConsent()
+        {
+            //Write Consent JSON to Okta
+            //Check with Okta to see if concent is required
+            string userEmail = GetUserName();
+
+            //User is logged in. Check on consent
+            if (userEmail != "ERROR")
+            {
+                //Create a new okta client to get profile data for the user
+                var client = new OktaClient(new Okta.Sdk.Configuration.OktaClientConfiguration
+                {
+                    OktaDomain = _globalConfiguration.Okta_Org,
+                    Token = helpers.GetOktaAPIToken()
+                });
+
+                var currentUser = await client.Users.GetUserAsync(userEmail);
+
+                //TODO: Clean this crap up
+                Consent_Version = _globalConfiguration.GDPR_Consent_Version;
+                currentUser.Profile["consent"] = @"{'Version': '" + Consent_Version + "', 'Date': '" + DateTime.Now + "'}";
+
+                var updateResult = await currentUser.UpdateAsync();
+
+                return Redirect("~/");
+            }
+            else
+            {
+                return Redirect("~/");
+            }
         }
     }
 }
