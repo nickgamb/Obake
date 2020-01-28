@@ -75,7 +75,8 @@ $(document).on('ready', function () {
             redirectUri: '@Model.redirectUri',
             logo: '@Model.logo',
             features: {
-                passwordlessAuth: @Model.enableFactorSequencing
+                passwordlessAuth: @Model.enableFactorSequencing,
+                webauthn: true
             },
             authParams: {
                 issuer: '@Model.issuer',
@@ -88,9 +89,13 @@ $(document).on('ready', function () {
         //START: Include on every login widget view
         //Get current session state
         oktaSignIn.session.get(function (res) {
-            // Session exists, show logged in state.
+            // Session exists, a user should not be on this page and logged in. Log them out and redirect to try again.
             if (res.status === 'ACTIVE') {
-                return;
+                oktaSignIn.signOut(); //clear okta token store
+                eraseCookie("idToken");
+                eraseCookie("accessToken");
+                console.log('logged out');
+                window.location.reload();
             }
             // No session, show the login form
             oktaSignIn.renderEl(
@@ -105,7 +110,20 @@ $(document).on('ready', function () {
                 }
             );
         });
-                        //END: Include on every login widget view</script>
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }      
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }   
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+    //END: Include on every login widget view
+    </script>
 </body>
 
 </html>

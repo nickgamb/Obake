@@ -20,6 +20,10 @@ namespace APIDemo_DemoLauncher.Pages.Profile
         public string EmployeeNumber { get; set; }
         public string ProfileURL { get; set; }
         public string ProfilePictureURL { get; set; }
+        public string SSN { get; set; }
+        public string BusinessNumber { get; set; }
+        public string AccountNumber { get; set; }
+        public bool inMFA { get; set; }
     }
 
     public class OktaChangePasswordProfile

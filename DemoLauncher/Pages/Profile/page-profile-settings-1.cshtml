@@ -234,7 +234,7 @@
                                 <i class="fa fa-minus-circle"></i>
                             </span>
                             <div class="media-body">
-                                <strong>Oh snap!</strong> @Model.ErrorMessage
+                                <strong>Oh snap! </strong> @Model.ErrorMessage
                             </div>
                         </div>
                     </div>
@@ -270,8 +270,7 @@
                                         <!-- Edit Profile -->
                                         <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                                             <div class="g-pr-10">
-                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10"></strong>
-                                                <span id="spanEditButton" class="align-top"></span>
+                                                <button asp-page-handler="DeleteProfile" onclick="return confirm('Are you sure that you want to delete your profile?')" class="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#">Delete Profile</button>
                                             </div>
                                             <span>
                                                 <i id="editProfileButton" class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
@@ -299,6 +298,30 @@
                                             <div class="g-pr-10">
                                                 <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your ID Number</strong>
                                                 <input id="spanEmployeeNumber" class="align-top" asp-for="oktaProfile.EmployeeNumber" disabled></>
+                                            </div>
+                                        </li>
+                                        <!-- End Your ID -->
+                                        <!-- Your SSN -->
+                                        <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
+                                            <div class="g-pr-10">
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your SSN</strong>
+                                                <input id="spanSSN" class="align-top" asp-for="oktaProfile.SSN" disabled></>
+                                            </div>
+                                        </li>
+                                        <!-- End Your SSN -->
+                                        <!-- Your Business Number -->
+                                        <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
+                                            <div class="g-pr-10">
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your Business Number</strong>
+                                                <input id="spanBusinessNumber" class="align-top" asp-for="oktaProfile.BusinessNumber" disabled></>
+                                            </div>
+                                        </li>
+                                        <!-- End Your Business Number-->
+                                        <!-- Your Account Number -->
+                                        <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
+                                            <div class="g-pr-10">
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your Account Number</strong>
+                                                <input id="spanAccountNumber" class="align-top" asp-for="oktaProfile.AccountNumber" disabled></>
                                             </div>
                                         </li>
                                         <!-- End Your ID -->
@@ -366,6 +389,16 @@
                                             </div>
                                         </li>
                                         <!-- End Profile Picture -->
+                                        <!-- MFA -->
+                                        <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
+                                            <div class="g-pr-10">
+                                                <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Enable MFA?</strong>
+                                                <input id="spanEnrollMFA" class="align-top" type="checkbox" asp-for="oktaProfile.inMFA" disabled></>
+                                                <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox">
+
+                                            </div>
+                                        </li>
+                                        <!-- End MFA -->
                                     </ul>
 
                                     <div class="text-sm-right">
@@ -772,6 +805,14 @@
                 $("#spanPrimaryPhone").attr('disabled', false);
                 $("#spanAddress").attr('disabled', false);
                 $("#spanProfilePictureUrl").attr('disabled', false);
+                $("#spanEnrollMFA").attr('disabled', false);
+
+                var isAdmin = @(Model.isAdmin.ToString().ToLower());
+                if (isAdmin) {
+                    $("#spanSSN").attr('disabled', false);
+                    $("#spanBusinessNumber").attr('disabled', false);
+                    $("#spanAccountNumber").attr('disabled', false);
+                }
             });
         });
 

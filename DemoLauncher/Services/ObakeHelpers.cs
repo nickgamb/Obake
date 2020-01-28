@@ -135,5 +135,20 @@ namespace DemoLauncher.Services
             //TODO: Log unknown state
             return null;
         }
+
+        //Util to get profile values gracefully
+        public string TryGetProfileValues(dynamic profile, string key)
+        {
+            try
+            {
+                string value = profile[key].ToString();
+                return value;
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+
+        }
     }
 }

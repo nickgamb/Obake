@@ -1,0 +1,276 @@
+﻿@page
+@model PageSignupApiModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <main>
+        <!-- Login -->
+        <section class="dzsparallaxer auto-init height-is-based-on-content use-loading mode-scroll loaded dzsprx-readyall" data-options="{direction: 'reverse', settings_mode_oneelement_max_offset: '150'}">
+            <!-- Parallax Image -->
+            <div class="divimage dzsparallaxer--target w-100 u-bg-overlay g-bg-size-cover g-bg-bluegray-opacity-0_3--after" style="height: 140%; background-image: url(../../assets/img-temp/1920x1080/img2.jpg);"></div>
+            <!-- End Parallax Image -->
+            <!-- Danger Alert -->
+            <div style="@(Model.bShowErrorMessage ? "display:block" : "display:none")" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <div class="media">
+                    <span class="d-flex mr-2 g-mt-5">
+                        <i class="fa fa-minus-circle"></i>
+                    </span>
+                    <div class="media-body">
+                        <strong>Oh snap!</strong> @Model.ErrorMessage
+                    </div>
+                </div>
+            </div>
+            <!-- Danger Alert -->
+            <div class="container g-pt-100 g-pb-20">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 flex-md-unordered align-self-center g-mb-80">
+                        <div id="signup-section" class="u-shadow-v21 g-bg-white rounded g-pa-50">
+                            <header class="text-center mb-4">
+                                <h2 class="h2 g-color-black g-font-weight-600">Signup</h2>
+                                <hr />
+                            </header>
+
+                            <!-- Form -->
+                            <form method="post" class="g-py-15">
+                                <!-- Account Type Options -->
+                                <h2 class="h4 g-font-weight-300">What type of account do you have?</h2>
+                                <div class="row">
+                                    <!-- Personal -->
+                                    <div class="col-md-3">
+                                        <label class="u-check w-100 g-mb-25">
+                                            <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">Personal</strong>
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="accountType" value="personalReg">
+                                            <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                    <i></i>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <!-- End Personal -->
+                                    <!-- Business -->
+                                    <div class="col-md-3">
+                                        <label class="u-check w-100 g-mb-25">
+                                            <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">Business</strong>
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="accountType" value="businessReg">
+                                            <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                    <i></i>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <!-- End Business -->
+                                </div>
+                                <!-- End Account Type Options -->
+                                <!-- Personal Reg Options-->
+                                <div id="personalReg" class="desc">
+                                    <h2 class="h4 g-font-weight-300">Do you have your SSN?</h2>
+                                    <div class="row">
+                                        <!-- Social -->
+                                        <div class="col-md-3">
+                                            <label class="u-check w-100 g-mb-25">
+                                                <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">Yes</strong>
+                                                <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="personalReg_Number" value="personalReg_Social">
+                                                <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                    <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <!-- End Social -->
+                                        <!-- Account -->
+                                        <div class="col-md-3">
+                                            <label class="u-check w-100 g-mb-25">
+                                                <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">No</strong>
+                                                <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="personalReg_Number" value="accountNumber">
+                                                <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                    <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <!-- End Account -->
+                                    </div>
+                                </div>
+                                <!-- End Personal Reg Options-->
+                                <!-- Business Reg Options-->
+                                <div id="businessReg" class="desc">
+                                    <h2 class="h4 g-font-weight-300">Do you have your business number?</h2>
+                                    <div class="row">
+                                        <!-- Social -->
+                                        <div class="col-md-3">
+                                            <label class="u-check w-100 g-mb-25">
+                                                <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">Yes</strong>
+                                                <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="businessReg_Number" value="businessReg_BusinessNumber">
+                                                <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                    <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <!-- End Social -->
+                                        <!-- Account -->
+                                        <div class="col-md-3">
+                                            <label class="u-check w-100 g-mb-25">
+                                                <strong class="d-block g-color-gray-dark-v2 g-font-weight-700 g-mb-10">No</strong>
+                                                <input class="g-hidden-xs-up g-pos-abs g-top-10 g-right-10" type="radio" name="businessReg_Number" value="accountNumber">
+                                                <div class="d-flex align-self-center g-width-20 g-ml-15">
+                                                    <div class="u-check-icon-radio-v5 g-pos-rel g-width-20 g-height-20">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <!-- End Account -->
+                                    </div>
+                                </div>
+                                <!--End Business Reg Options-->
+                                <div id="personalReg_Social" class="desc">
+                                    <div class="mb-4">
+                                        <input asp-for="sSNInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Social Security Number">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="email@domain.com">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="FirstNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="First Name">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="LastNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Last Name">
+                                    </div>
+                                    <div class="text-center mb-5">
+                                        <button asp-page-handler="Signup_ClaimAccount" id="SignupSubmitButton" class="btn btn-block u-btn-primary rounded g-py-13">Signup</button>
+                                    </div>
+                                </div>
+                                <div id="businessReg_BusinessNumber" class="desc">
+                                    <div class="mb-4">
+                                        <input asp-for="businessNumberInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Business Number">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="email@domain.com">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="FirstNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="First Name">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="LastNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Last Name">
+                                    </div>
+                                    <div class="text-center mb-5">
+                                        <button asp-page-handler="Signup_ClaimAccount" id="SignupSubmitButton" class="btn btn-block u-btn-primary rounded g-py-13">Signup</button>
+                                    </div>
+                                </div>
+                                <div id="accountNumber" class="desc">
+                                    <div class="mb-4">
+                                        <input asp-for="accountNumberInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Account Number">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="EmailInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="email@domain.com">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="FirstNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="First Name">
+                                    </div>
+                                    <div class="mb-4">
+                                        <input asp-for="LastNameInput" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" placeholder="Last Name">
+                                    </div>
+                                    <div class="text-center mb-5">
+                                        <button asp-page-handler="Signup_ClaimAccount" id="SignupSubmitButton" class="btn btn-block u-btn-primary rounded g-py-13">Signup</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+                            <footer class="text-center">
+                                <p class="g-color-gray-dark-v5 mb-0">
+                                    Already have an account? <a class="g-font-weight-600" href="/Login/page-login-api">signin</a>
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <!-- End Login -->
+        <a class="js-go-to u-go-to-v1" href="#" data-type="fixed" data-position='{
+     "bottom": 15,
+     "right": 15
+   }' data-offset-top="400" data-compensation="#js-header" data-show-effect="zoomIn">
+            <i class="hs-icon hs-icon-arrow-top"></i>
+        </a>
+    </main>
+
+    <div class="u-outer-spaces-helper"></div>
+
+    <!-- JS Plugins Init. -->
+    <script>
+        $(document).on('ready', function () {
+            // initialization of tabs
+            $.HSCore.components.HSTabs.init('[role="tablist"]');
+
+            // initialization of go to
+            $.HSCore.components.HSGoTo.init('.js-go-to');
+
+            //Form radios
+            $("div.desc").hide();
+            $("input[name$='accountType']").click(function () {
+                var test = $(this).val();
+                $("div.desc").hide();
+                $("#" + test).show();
+            });
+            $("input[name$='personalReg_Number']").click(function () {
+                var test = $(this).val();
+                if (test === "personalReg_Social") {
+                    $("#accountNumber").hide();
+                    $("#personalReg_Social").show();
+                }
+                else {
+                    $("#personalReg_Social").hide();
+                    $("#accountNumber").show();
+                }
+            });
+            $("input[name$='businessReg_Number']").click(function () {
+                var test = $(this).val();
+                if (test === "businessReg_BusinessNumber") {
+                    $("#accountNumber").hide();
+                    $("#businessReg_BusinessNumber").show();
+                }
+                else {
+                    $("#businessReg_BusinessNumber").hide();
+                    $("#accountNumber").show();
+                }
+            });
+        });
+
+        $(window).on('load', function () {
+            // initialization of header
+            $.HSCore.components.HSHeader.init($('#js-header'));
+            $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+            // initialization of HSMegaMenu component
+            $('.js-mega-menu').HSMegaMenu({
+                event: 'hover',
+                pageContainer: $('.container'),
+                breakpoint: 991
+            });
+        });
+
+        $(window).on('resize', function () {
+            setTimeout(function () {
+                $.HSCore.components.HSTabs.init('[role="tablist"]');
+            }, 200);
+        });
+    </script>
+</body>
+
+</html>
