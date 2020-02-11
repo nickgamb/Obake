@@ -42,10 +42,16 @@ namespace DemoLauncher.Services
         public string DemoLauncher_IntroBlurb { get; set; } //The jumbotron blurb
         public string DemoLauncher_BodyBlurb1_Title { get; set; } //The first body blurb title
         public string DemoLauncher_BodyBlurb1 { get; set; } //The first body blurb
+        public string DemoLauncher_BodyBlurb1_HyperLink_Text { get; set; } //The first body blurb hyperlink text
+        public string DemoLauncher_BodyBlurb1_HyperLink_Url { get; set; } //The first body blurb hyperlink url
         public string DemoLauncher_BodyBlurb2_Title { get; set; } //The second body blurb title
         public string DemoLauncher_BodyBlurb2 { get; set; } //The second body blurb
+        public string DemoLauncher_BodyBlurb2_HyperLink_Text { get; set; } //The second body blurb hyperlink text
+        public string DemoLauncher_BodyBlurb2_HyperLink_Url { get; set; } //The second body blurb hyperlink url
         public string DemoLauncher_BodyBlurb3_Title { get; set; } //The third body blurb title
         public string DemoLauncher_BodyBlurb3 { get; set; } //The third body blurb
+        public string DemoLauncher_BodyBlurb3_HyperLink_Text { get; set; } //The third body blurb hyperlink text
+        public string DemoLauncher_BodyBlurb3_HyperLink_Url { get; set; } //The third body blurb hyperlink url
         public string GDPR_Consent_Version { get; set; } //The current version of terms
 
         private readonly IConfiguration _configuration;
@@ -124,10 +130,16 @@ namespace DemoLauncher.Services
                     DemoLauncher_IntroBlurb = AppConfig["settings"]["intro_blurb"]; //The jumbotron blurb
                     DemoLauncher_BodyBlurb1_Title = AppConfig["settings"]["body_blurb1_title"]; //The first body blurb title
                     DemoLauncher_BodyBlurb1 = AppConfig["settings"]["body_blurb1"]; //The first body blurb
+                    DemoLauncher_BodyBlurb1_HyperLink_Text = AppConfig["settings"]["body_blurb1_hyperlink_text"]; //The first body blurb hyperlink text
+                    DemoLauncher_BodyBlurb1_HyperLink_Url = AppConfig["settings"]["body_blurb1_hyperlink_url"]; //The first body blurb hyperlink url
                     DemoLauncher_BodyBlurb2_Title = AppConfig["settings"]["body_blurb2_title"];//The second body blurb title
                     DemoLauncher_BodyBlurb2 = AppConfig["settings"]["body_blurb2"]; //The second body blurb
+                    DemoLauncher_BodyBlurb2_HyperLink_Text = AppConfig["settings"]["body_blurb2_hyperlink_text"]; //The second body blurb hyperlink text
+                    DemoLauncher_BodyBlurb2_HyperLink_Url = AppConfig["settings"]["body_blurb2_hyperlink_url"]; //The second body blurb hyperlink url
                     DemoLauncher_BodyBlurb3_Title = AppConfig["settings"]["body_blurb3_title"]; //The third body blurb title
                     DemoLauncher_BodyBlurb3 = AppConfig["settings"]["body_blurb3"]; //The third body blurb
+                    DemoLauncher_BodyBlurb3_HyperLink_Text = AppConfig["settings"]["body_blurb3_hyperlink_text"]; //The third body blurb hyperlink text
+                    DemoLauncher_BodyBlurb3_HyperLink_Url = AppConfig["settings"]["body_blurb3_hyperlink_url"]; //The third body blurb hyperlink url
                     Okta_Enable_FactorSequencing = AppConfig["settings"]["enable_factor_sequencing"];
                     GDPR_Consent_Version = AppConfig["settings"]["gdpr_consent_version"]; //The third body blurb
                 }
@@ -190,6 +202,14 @@ namespace DemoLauncher.Services
             {
                 DemoLauncher_BodyBlurb1 = _configuration["AppSettings:body_blurb1"]; //The first body blurb
             }
+            if (DemoLauncher_BodyBlurb1_HyperLink_Text == null)
+            {
+                DemoLauncher_BodyBlurb1_HyperLink_Text = _configuration["AppSettings:body_blurb1_hyperlink_text"]; //The first body blurb hyperlink text
+            }
+            if (DemoLauncher_BodyBlurb1_HyperLink_Url == null)
+            {
+                DemoLauncher_BodyBlurb1_HyperLink_Url = _configuration["AppSettings:body_blurb1_hyperlink_url"]; //The first body blurb hyperlink url
+            }
             if (DemoLauncher_BodyBlurb2_Title == null)
             {
                 DemoLauncher_BodyBlurb2_Title = _configuration["AppSettings:body_blurb2_title"]; //The second body blurb title
@@ -198,6 +218,14 @@ namespace DemoLauncher.Services
             {
                 DemoLauncher_BodyBlurb2 = _configuration["AppSettings:body_blurb2"]; //The second body blurb
             }
+            if (DemoLauncher_BodyBlurb2_HyperLink_Text == null)
+            {
+                DemoLauncher_BodyBlurb2_HyperLink_Text = _configuration["AppSettings:body_blurb2_hyperlink_text"]; //The second body blurb hyperlink text
+            }
+            if (DemoLauncher_BodyBlurb2_HyperLink_Url == null)
+            {
+                DemoLauncher_BodyBlurb2_HyperLink_Url = _configuration["AppSettings:body_blurb2_hyperlink_url"]; //The second body blurb hyperlink url
+            }
             if (DemoLauncher_BodyBlurb3_Title == null)
             {
                 DemoLauncher_BodyBlurb3_Title = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb title
@@ -205,6 +233,14 @@ namespace DemoLauncher.Services
             if(DemoLauncher_BodyBlurb3 == null)
             { 
                 DemoLauncher_BodyBlurb3 = _configuration["AppSettings:body_blurb3_title"]; //The third body blurb
+            }
+            if (DemoLauncher_BodyBlurb3_HyperLink_Text == null)
+            {
+                DemoLauncher_BodyBlurb3_HyperLink_Text = _configuration["AppSettings:body_blurb3_hyperlink_text"]; //The third body blurb hyperlink text
+            }
+            if (DemoLauncher_BodyBlurb3_HyperLink_Url == null)
+            {
+                DemoLauncher_BodyBlurb3_HyperLink_Url = _configuration["AppSettings:body_blurb3_hyperlink_url"]; //The third body blurb hyperlink url
             }
             if (Okta_Enable_FactorSequencing == null)
             {

@@ -37,13 +37,25 @@ namespace DemoLauncher.Pages
         [BindProperty]
         public string DemoLauncher_BodyBlurb1 { get; set; } //The first body blurb
         [BindProperty]
+        public string DemoLauncher_BodyBlurb1_HyperLink_Text { get; set; } //The first body blurb hyperlink text
+        [BindProperty]
+        public string DemoLauncher_BodyBlurb1_HyperLink_Url { get; set; } //The first body blurb hyperlink url
+        [BindProperty]
         public string DemoLauncher_BodyBlurb2_Title { get; set; } //The second body blurb title
         [BindProperty]
         public string DemoLauncher_BodyBlurb2 { get; set; } //The second body blurb
         [BindProperty]
+        public string DemoLauncher_BodyBlurb2_HyperLink_Text { get; set; } //The second body blurb hyperlink text
+        [BindProperty]
+        public string DemoLauncher_BodyBlurb2_HyperLink_Url { get; set; } //The second body blurb hyperlink url
+        [BindProperty]
         public string DemoLauncher_BodyBlurb3_Title { get; set; } //The third body blurb title
         [BindProperty]
         public string DemoLauncher_BodyBlurb3 { get; set; } //The third body blurb
+        [BindProperty]
+        public string DemoLauncher_BodyBlurb3_HyperLink_Text { get; set; } //The third body blurb hyperlink text
+        [BindProperty]
+        public string DemoLauncher_BodyBlurb3_HyperLink_Url { get; set; } //The third body blurb hyperlink url
         [BindProperty]
         public bool Consent_Required { get; set; } //Is user consent needed
         [BindProperty]
@@ -74,10 +86,16 @@ namespace DemoLauncher.Pages
             DemoLauncher_IntroBlurb = _globalConfiguration.DemoLauncher_IntroBlurb; //The jumbotron blurb
             DemoLauncher_BodyBlurb1_Title = _globalConfiguration.DemoLauncher_BodyBlurb1_Title; //The first body blurb title
             DemoLauncher_BodyBlurb1 = _globalConfiguration.DemoLauncher_BodyBlurb1; //The first body blurb
+            DemoLauncher_BodyBlurb1_HyperLink_Text = _globalConfiguration.DemoLauncher_BodyBlurb1_HyperLink_Text; //The first body blurb hyperlink text
+            DemoLauncher_BodyBlurb1_HyperLink_Url = _globalConfiguration.DemoLauncher_BodyBlurb1_HyperLink_Url; //The first body blurb hyperlink url
             DemoLauncher_BodyBlurb2_Title = _globalConfiguration.DemoLauncher_BodyBlurb2_Title; //The second body blurb title
             DemoLauncher_BodyBlurb2 = _globalConfiguration.DemoLauncher_BodyBlurb2; //The second body blurb
+            DemoLauncher_BodyBlurb2_HyperLink_Text = _globalConfiguration.DemoLauncher_BodyBlurb2_HyperLink_Text; //The second body blurb hyperlink text
+            DemoLauncher_BodyBlurb2_HyperLink_Url = _globalConfiguration.DemoLauncher_BodyBlurb2_HyperLink_Url; //The second body blurb hyperlink url
             DemoLauncher_BodyBlurb3_Title = _globalConfiguration.DemoLauncher_BodyBlurb3_Title; //The third body blurb title
             DemoLauncher_BodyBlurb3 = _globalConfiguration.DemoLauncher_BodyBlurb3; //The third body blurb
+            DemoLauncher_BodyBlurb3_HyperLink_Text = _globalConfiguration.DemoLauncher_BodyBlurb3_HyperLink_Text; //The third body blurb hyperlink text
+            DemoLauncher_BodyBlurb3_HyperLink_Url = _globalConfiguration.DemoLauncher_BodyBlurb3_HyperLink_Url; //The third body blurb hyperlink url
             Consent_Version = _globalConfiguration.GDPR_Consent_Version;
 
             //Check with Okta to see if concent is required
