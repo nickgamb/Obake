@@ -49,6 +49,8 @@ namespace DemoLauncher.Pages
         public bool bShowErrorMessage { get; set; } = false;
         [BindProperty]
         public string ErrorMessage { get; set; }
+        [BindProperty]
+        public string widgetBackgroundImage { get; set; }
 
         /*********************************
         * Class setup and global config *
@@ -66,7 +68,8 @@ namespace DemoLauncher.Pages
 
         public void OnGet()
         {
-
+            //Get the background image for the signin backgound from the widget image app setting in UDP
+            widgetBackgroundImage = _globalConfiguration.Widget_Background_Image;
         }
 
         /************************

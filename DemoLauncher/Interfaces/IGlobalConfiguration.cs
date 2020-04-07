@@ -41,5 +41,6 @@ namespace DemoLauncher.Interfaces
         string DemoLauncher_BodyBlurb3_HyperLink_Text { get; set; } //The third body blurb hyperlink text
         string DemoLauncher_BodyBlurb3_HyperLink_Url { get; set; } //The third body blurb hyperlink url
         string GDPR_Consent_Version { get; set; } //The current version of terms and conditions
+        string Widget_Background_Image { get; set; } //The paralaxing background image behind the widget
     }
 }

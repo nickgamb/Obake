@@ -53,6 +53,7 @@ namespace DemoLauncher.Services
         public string DemoLauncher_BodyBlurb3_HyperLink_Text { get; set; } //The third body blurb hyperlink text
         public string DemoLauncher_BodyBlurb3_HyperLink_Url { get; set; } //The third body blurb hyperlink url
         public string GDPR_Consent_Version { get; set; } //The current version of terms
+        public string Widget_Background_Image { get; set; } //The paralaxing background image behind the widget
 
         private readonly IConfiguration _configuration;
 
@@ -142,6 +143,7 @@ namespace DemoLauncher.Services
                     DemoLauncher_BodyBlurb3_HyperLink_Url = AppConfig["settings"]["body_blurb3_hyperlink_url"]; //The third body blurb hyperlink url
                     Okta_Enable_FactorSequencing = AppConfig["settings"]["enable_factor_sequencing"];
                     GDPR_Consent_Version = AppConfig["settings"]["gdpr_consent_version"]; //The third body blurb
+                    Widget_Background_Image = AppConfig["settings"]["widget_background_image"]; //The paralaxing background image behind the widget
                 }
                 catch (Exception exception)
                 {
@@ -249,6 +251,10 @@ namespace DemoLauncher.Services
             if (GDPR_Consent_Version == null)
             {
                 GDPR_Consent_Version = _configuration["AppSettings:gdpr_consent_version"];
+            }
+            if (Widget_Background_Image == null)
+            {
+                Widget_Background_Image = _configuration["AppSettings:widget_background_image"];
             }
         }
 

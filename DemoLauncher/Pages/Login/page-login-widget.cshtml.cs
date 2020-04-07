@@ -34,6 +34,8 @@ namespace DemoLauncher.Pages
         public string issuer { get; set; }
         [BindProperty]
         public string enableFactorSequencing { get; set; }
+        [BindProperty]
+        public string widgetBackgroundImage { get; set; }
 
         /*********************************
         * Class setup and global config *
@@ -53,6 +55,7 @@ namespace DemoLauncher.Pages
             logo = _globalConfiguration.DemoLauncher_LogoUri;
             issuer = _globalConfiguration.Okta_Issuer;
             enableFactorSequencing = _globalConfiguration.Okta_Enable_FactorSequencing;
+            widgetBackgroundImage = _globalConfiguration.Widget_Background_Image;
         }
     }
 }

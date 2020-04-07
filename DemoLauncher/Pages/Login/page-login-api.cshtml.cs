@@ -43,6 +43,10 @@ namespace DemoLauncher.Pages
         [BindProperty]
         public string Verify { get; set; }
 
+        //Get the background image used for widget
+        [BindProperty]
+        public string widgetBackgroundImage { get; set; }
+
         /***************************
          * View element visibility *
          ***************************/
@@ -71,6 +75,9 @@ namespace DemoLauncher.Pages
             {
                 bShowUsername = true;
             }
+
+            //Get the background image for the signin backgound from the widget image app setting in UDP
+            widgetBackgroundImage = _globalConfiguration.Widget_Background_Image;
         }
         public void OnPost()
         {
